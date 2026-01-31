@@ -4,6 +4,7 @@ from rest_framework import serializers
 from .models import Store
 
 
+
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
@@ -19,6 +20,7 @@ class StoreSerializer(serializers.ModelSerializer):
             "address",
             "is_active",
             "logo_url",
+            "hero_images",  # <-- nuevo campo para el carrusel
         ]
         read_only_fields = ["is_active"]
         extra_kwargs = {"slug": {"required": False}}

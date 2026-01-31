@@ -20,6 +20,10 @@ class Store(models.Model):
     whatsapp = models.CharField(max_length=30, blank=True)
     address = models.CharField(max_length=200, blank=True)
 
+    # Carrusel de portada: lista de imágenes y textos
+    # [{"url": ..., "caption": ...}, ...]
+    hero_images = models.JSONField(default=list, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
