@@ -1,0 +1,1 @@
+import{e as a,N as n,c as o,E as s,o as _}from"./CIhdi_ZZ.js";const m=a({__name:"index",async setup(c){let e,t;return[e,t]=n(()=>s("/tiendas",{})),await e,t(),(r,i)=>(_(),o("div"))}});export{m as default};
