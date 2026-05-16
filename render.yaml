@@ -13,30 +13,16 @@ services:
       - key: DB_NAME
         value: pymeweb
       - key: DB_USER
-        fromDatabase:
-          name: pymeweb-db
-          property: user
+        value: neondb_owner
       - key: DB_PASSWORD
-        fromDatabase:
-          name: pymeweb-db
-          property: password
+        value: npg_Wn1DEB4QFlwq
       - key: DB_HOST
-        fromDatabase:
-          name: pymeweb-db
-          property: host
+        value: ep-wispy-river-ackhbou0-pooler.sa-east-1.aws.neon.tech
       - key: DB_PORT
-        fromDatabase:
-          name: pymeweb-db
-          property: port
+        value: "5432"
       - key: DB_SSLMODE
         value: require
       - key: ALLOWED_HOSTS
         value: "*"
       - key: CORS_ALLOW_ALL_ORIGINS
         value: "True"
-
-databases:
-  - name: pymeweb-db
-    databaseName: pymeweb
-    user: neondb_owner
-    plan: standard
