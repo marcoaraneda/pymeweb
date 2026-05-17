@@ -26,3 +26,16 @@ services:
         value: "*"
       - key: CORS_ALLOW_ALL_ORIGINS
         value: "True"
+  # Frontend Static Site
+  - type: static_site
+    name: pymeweb
+    staticPublishPath: ./public
+    buildCommand: npm run build:static-deploy
+    envVars:
+      - key: NUXT_PUBLIC_API_BASE
+        value: https://pymeweb-backend.onrender.com/api
+    routes:
+      - path: /_nuxt/*
+        methods: GET
+      - path: /*
+        destination: /index.html
