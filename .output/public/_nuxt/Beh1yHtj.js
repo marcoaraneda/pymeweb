@@ -1,0 +1,1 @@
+import{ab as n,h as u,ac as i,E as c}from"./PL4A40KY.js";import{u as d}from"./CFX_VFRk.js";import{r as m}from"./D8I1lUdA.js";import"./CAFoUDZH.js";const S=n(async s=>{let a,r;const t=s.params.slug;if(!t)return;const e=d(),o=u();if(e.setSlug(t),m(t,o.user?.id),!e.data||e.data.slug!==t)try{[a,r]=i(()=>e.fetchTienda()),await a,r()}catch{return c("/")}});export{S as default};
