@@ -71,5 +71,18 @@ export default defineNuxtConfig({
         port: Number(process.env.NUXT_HMR_PORT) || 24680
       }
     }
+  },
+
+  routeRules: {
+    // Prerender root page for static generation
+    '/': { prerender: true },
+  },
+
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: [],
+      ignore: ['/admin', '/dashboard', '/store', '/marketplace', '/profile', '/tiendas', '/login', '/register', '/notificaciones'],
+    }
   }
 })
