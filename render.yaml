@@ -30,7 +30,7 @@ services:
   - type: static_site
     name: pymeweb
     staticPublishPath: ./public
-    buildCommand: npm run build:static-deploy
+    buildCommand: cd pymeweb-frontend && npm run build:static-deploy
     envVars:
       - key: NUXT_PUBLIC_API_BASE
         value: https://pymeweb-backend.onrender.com/api
