@@ -2,5 +2,5 @@ services:
   - type: static_site
     name: pymeweb
     env: node
-    buildCommand: cd pymeweb-frontend && npm run build:static-deploy
-    publishPath: pymeweb-frontend/public
+    buildCommand: npm run build:static-deploy
+    publishPath: public
