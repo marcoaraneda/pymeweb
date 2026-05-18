@@ -1,28 +1,35 @@
 services:
   - type: web
-    name: pymeweb-backend
+    name: pymeweb-api
     env: python
-    plan: standard
-    buildCommand: pip install -r requirements.txt && python manage.py migrate
-    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    plan: free
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: DJANGO_DEBUG
         value: "False"
-      - key: DB_NAME
-        value: pymeweb
-      - key: DB_USER
-        value: neondb_owner
-      - key: DB_PASSWORD
-        value: npg_Wn1DEB4QFlwq
-      - key: DB_HOST
-        value: ep-wispy-river-ackhbou0-pooler.sa-east-1.aws.neon.tech
-      - key: DB_PORT
-        value: "5432"
-      - key: DB_SSLMODE
-        value: require
+      - key: DATABASE_URL
+        sync: false
       - key: ALLOWED_HOSTS
-        value: "*"
+        value: "localhost,127.0.0.1,pymeweb.onrender.com,pymeweb-api.onrender.com"
       - key: CORS_ALLOW_ALL_ORIGINS
-        value: "True"
+        value: "False"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://pymeweb.onrender.com,http://localhost:3000,http://127.0.0.1:3000"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://pymeweb.onrender.com,https://pymeweb-api.onrender.com"
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: WEBPAY_COMMERCE_CODE
+        value: "597055555532"
+      - key: WEBPAY_API_KEY
+        value: "579B1A0F0F3F8C2D1B0F3F8C2D1B0F3F"
+      - key: WEBPAY_ENVIRONMENT
+        value: "INTEGRATION"
