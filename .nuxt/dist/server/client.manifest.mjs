@@ -1,0 +1,1 @@
+export { default } from "file:///C:/Users/marco/OneDrive/Escritorio/WEBPYME/pymeweb-frontend/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
