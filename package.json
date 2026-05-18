@@ -8,6 +8,7 @@
     "build": "nuxt build --preload",
     "generate": "nuxt generate",
     "build:static-deploy": "npm run build && node scripts/copy-output-public.js",
+    "start": "node .output/server/index.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

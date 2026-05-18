@@ -1,6 +1,6 @@
 services:
-  - type: static_site
+  - type: web_service
     name: pymeweb
     env: node
-    buildCommand: npm run build:static-deploy
-    publishPath: public
+    buildCommand: npm run build
+    startCommand: npm run start
