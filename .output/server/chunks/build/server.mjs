@@ -1,8 +1,7 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { defineComponent, shallowRef, getCurrentInstance, provide, cloneVNode, h, createElementBlock, ref, inject, Suspense, hasInjectionContext, shallowReactive, Fragment, defineAsyncComponent, computed, unref, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
-import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, d as destr, n as klona, o as sanitizeStatusCode, p as parse, q as getRequestHeader, r as isEqual, v as getContext, x as setCookie, y as getCookie, z as deleteCookie, $ as $fetch$1, A as createHooks, B as executeAsync, h as createError$1, C as toRouteMatcher, D as createRouter$1, E as defu } from '../_/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, getCurrentInstance, ref, reactive, effectScope, isRef, isReactive, toRaw, getCurrentScope, onScopeDispose, watch, nextTick, toRefs, markRaw, computed, defineComponent, createElementBlock, shallowRef, provide, cloneVNode, h, unref, shallowReactive, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, isReadonly, isShallow, defineAsyncComponent, mergeProps, withCtx, useSSRContext } from 'vue';
+import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, n as sanitizeStatusCode, o as getContext, $ as $fetch, p as createHooks, q as executeAsync, h as createError$1, r as toRouteMatcher, v as createRouter$1, x as defu } from '../_/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
-import { defineStore, setActivePinia, createPinia, shouldHydrate } from 'pinia';
-import { RouterView, useRoute as useRoute$1, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
+import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { ssrRenderSuspense, ssrRenderComponent, ssrRenderVNode } from 'vue/server-renderer';
 import 'node:http';
 import 'node:https';
@@ -18,7 +17,7 @@ import 'devalue';
 import 'unhead/utils';
 
 if (!globalThis.$fetch) {
-  globalThis.$fetch = $fetch$1.create({
+  globalThis.$fetch = $fetch.create({
     baseURL: baseURL()
   });
 }
@@ -207,7 +206,6 @@ function defineNuxtPlugin(plugin2) {
   return Object.assign(plugin2.setup || (() => {
   }), plugin2, { [NuxtPluginIndicator]: true, _name });
 }
-const definePayloadPlugin = defineNuxtPlugin;
 function callWithNuxt(nuxt, setup, args) {
   const fn = () => setup();
   const nuxtAppCtx = getNuxtAppCtx(nuxt._id);
@@ -362,28 +360,6 @@ const createError = (error) => {
   });
   return nuxtError;
 };
-async function getRouteRules(arg) {
-  const path = typeof arg === "string" ? arg : arg.path;
-  {
-    useNuxtApp().ssrContext._preloadManifest = true;
-    const _routeRulesMatcher = toRouteMatcher(
-      createRouter$1({ routes: (/* @__PURE__ */ useRuntimeConfig()).nitro.routeRules })
-    );
-    return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
-  }
-}
-function definePayloadReducer(name, reduce) {
-  {
-    useNuxtApp().ssrContext._payloadReducers[name] = reduce;
-  }
-}
-const payloadPlugin = definePayloadPlugin(() => {
-  definePayloadReducer(
-    "skipHydrate",
-    // We need to return something truthy to be treated as a match
-    (data) => !shouldHydrate(data) && 1
-  );
-});
 const unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:head",
   enforce: "pre",
@@ -395,301 +371,21 @@ const unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU = /* @__PURE__ */ defin
 function toArray(value) {
   return Array.isArray(value) ? value : [value];
 }
-const __nuxt_page_meta$s = { requiresAuth: true };
-const __nuxt_page_meta$r = { requiresAuth: true, ssr: false };
-const __nuxt_page_meta$q = { requiresAuth: true, ssr: false };
-const __nuxt_page_meta$p = { requiresAuth: true, ssr: false };
-const __nuxt_page_meta$o = { requiresAuth: true, ssr: false };
-const __nuxt_page_meta$n = { requiresAuth: true };
-const __nuxt_page_meta$m = { layout: "default" };
-const __nuxt_page_meta$l = { layout: "default" };
-const __nuxt_page_meta$k = { requiresAuth: true };
-const __nuxt_page_meta$j = { layout: "store" };
-const __nuxt_page_meta$i = { layout: "store" };
-const __nuxt_page_meta$h = { layout: "store" };
-const __nuxt_page_meta$g = { requiresAuth: true, ssr: false };
-const __nuxt_page_meta$f = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$e = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$d = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$c = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$b = { layout: "store" };
-const __nuxt_page_meta$a = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$9 = { layout: "store" };
-const __nuxt_page_meta$8 = { layout: "store", requiresAuth: true };
-const __nuxt_page_meta$7 = { layout: "store" };
-const __nuxt_page_meta$6 = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$5 = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$4 = { layout: "admin", requiresAuth: true };
-const __nuxt_page_meta$3 = {
-  layout: "store",
-  requiresAuth: true
-};
-const __nuxt_page_meta$2 = { layout: "store", requiresAuth: true };
-const __nuxt_page_meta$1 = { layout: "store" };
-const __nuxt_page_meta = { layout: "store", requiresAuth: true };
+async function getRouteRules(arg) {
+  const path = typeof arg === "string" ? arg : arg.path;
+  {
+    useNuxtApp().ssrContext._preloadManifest = true;
+    const _routeRulesMatcher = toRouteMatcher(
+      createRouter$1({ routes: (/* @__PURE__ */ useRuntimeConfig()).nitro.routeRules })
+    );
+    return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
+  }
+}
 const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-Dd-8yBII.mjs')
-  },
-  {
-    name: "login",
-    path: "/login",
-    component: () => import('./login-BjcoeB-i.mjs')
-  },
-  {
-    name: "profile",
-    path: "/profile",
-    meta: { ...__nuxt_page_meta$s || {}, ...{ "middleware": ["auth"] } },
-    component: () => import('./profile-CDvM1sfl.mjs')
-  },
-  {
-    name: "tiendas",
-    path: "/tiendas",
-    component: () => import('./tiendas-lopQeTu1.mjs')
-  },
-  {
-    name: "register",
-    path: "/register",
-    component: () => import('./register-3XGUzWDk.mjs')
-  },
-  {
-    name: "dashboard",
-    path: "/dashboard",
-    meta: { ...__nuxt_page_meta$o || {}, ...{ "middleware": ["auth"] } },
-    component: () => import('./dashboard-DbxexDvM.mjs'),
-    children: [
-      {
-        name: "dashboard-tickets",
-        path: "tickets",
-        component: () => import('./tickets-BvfeMxOp.mjs')
-      },
-      {
-        name: "dashboard-analisis",
-        path: "analisis",
-        meta: { ...__nuxt_page_meta$r || {}, ...{ "middleware": ["auth"] } },
-        component: () => import('./analisis-U9K1hSP0.mjs')
-      },
-      {
-        name: "dashboard-recursos-humanos",
-        path: "recursos-humanos",
-        meta: { ...__nuxt_page_meta$q || {}, ...{ "middleware": ["auth"] } },
-        component: () => import('./recursos-humanos-BQ5jVK-S.mjs')
-      },
-      {
-        name: "dashboard-analisis-financiero",
-        path: "analisis-financiero",
-        meta: { ...__nuxt_page_meta$p || {}, ...{ "middleware": ["auth"] } },
-        component: () => import('./analisis-financiero-wh6-p_Rg.mjs')
-      }
-    ]
-  },
-  {
-    name: "marketplace",
-    path: "/marketplace",
-    component: () => import('./marketplace-7xQJFpzJ.mjs'),
-    children: [
-      {
-        name: "marketplace-orden",
-        path: "orden",
-        component: () => import('./orden-HcQuWHWD.mjs')
-      },
-      {
-        name: "marketplace-carrito",
-        path: "carrito",
-        component: () => import('./index-_ue1bdVS.mjs')
-      },
-      {
-        name: "marketplace-mis-productos",
-        path: "mis-productos",
-        meta: { ...__nuxt_page_meta$n || {}, ...{ "middleware": ["auth"] } },
-        component: () => import('./mis-productos-DCrIOWUD.mjs')
-      },
-      {
-        name: "marketplace-vendedores-id",
-        path: "vendedores/:id()",
-        component: () => import('./_id_-aCIwYInC.mjs')
-      },
-      {
-        name: "marketplace-productos-slug",
-        path: "productos/:slug()",
-        meta: __nuxt_page_meta$m || {},
-        component: () => import('./_slug_-UTkJHTWn.mjs')
-      }
-    ]
-  },
-  {
-    name: "seguimiento",
-    path: "/seguimiento",
-    component: () => import('./seguimiento-zDT_kJ9O.mjs')
-  },
-  {
-    name: "store",
-    path: "/store",
-    meta: __nuxt_page_meta$l || {},
-    component: () => import('./index-BPagHLWx.mjs')
-  },
-  {
-    name: "notificaciones",
-    path: "/notificaciones",
-    meta: { ...__nuxt_page_meta$k || {}, ...{ "middleware": ["auth"] } },
-    component: () => import('./notificaciones-DZRttftv.mjs')
-  },
-  {
-    name: "store-slug",
-    path: "/store/:slug()",
-    meta: { ...__nuxt_page_meta$j || {}, ...{ "middleware": ["tenant"] } },
-    component: () => import('./index-DWhfp7fH.mjs')
-  },
-  {
-    name: "store-slug-orden",
-    path: "/store/:slug()/orden",
-    component: () => import('./orden-BFrs1o3S.mjs')
-  },
-  {
-    name: "store-slug-acerca",
-    path: "/store/:slug()/acerca",
-    meta: __nuxt_page_meta$i || {},
-    component: () => import('./acerca-B2i4ZiWV.mjs')
-  },
-  {
-    name: "store-slug-soporte",
-    path: "/store/:slug()/soporte",
-    meta: __nuxt_page_meta$h || {},
-    component: () => import('./soporte-C3J_By3v.mjs')
-  },
-  {
-    name: "store-slug-producto",
-    path: "/store/:slug()/producto",
-    component: () => import('./producto-DiHlehKX.mjs')
-  },
-  {
-    name: "administracion-tiendas",
-    path: "/administracion-tiendas",
-    meta: { ...__nuxt_page_meta$g || {}, ...{ "middleware": ["auth"] } },
-    component: () => import('./administracion-tiendas-CHxrc2L7.mjs')
-  },
-  {
-    name: "store-slug-admin-cms",
-    path: "/store/:slug()/admin/cms",
-    meta: { ...__nuxt_page_meta$f || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./cms-CotU8F2u.mjs')
-  },
-  {
-    name: "store-slug-admin-faq",
-    path: "/store/:slug()/admin/faq",
-    meta: { ...__nuxt_page_meta$e || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./faq-BmCj8juB.mjs')
-  },
-  {
-    name: "store-slug-admin",
-    path: "/store/:slug()/admin",
-    component: () => import('./index-Btl4M7PP.mjs')
-  },
-  {
-    name: "store-slug-admin-login",
-    path: "/store/:slug()/admin/login",
-    component: () => import('./login-Dx3snFdf.mjs')
-  },
-  {
-    name: "store-slug-admin-pagos",
-    path: "/store/:slug()/admin/pagos",
-    meta: { ...__nuxt_page_meta$d || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./pagos-CWZjy-1x.mjs')
-  },
-  {
-    name: "store-slug-success-id",
-    path: "/store/:slug()/success/:id()",
-    component: () => import('./_id_-Bs3qN1P4.mjs')
-  },
-  {
-    name: "store-slug-admin-resenas",
-    path: "/store/:slug()/admin/resenas",
-    meta: { ...__nuxt_page_meta$c || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./resenas-Dd4lkDWv.mjs')
-  },
-  {
-    name: "store-slug-carrito",
-    path: "/store/:slug()/carrito",
-    meta: __nuxt_page_meta$b || {},
-    component: () => import('./index-BPkySrc1.mjs')
-  },
-  {
-    name: "store-slug-success",
-    path: "/store/:slug()/success",
-    component: () => import('./index-Cc95XVds.mjs')
-  },
-  {
-    name: "store-slug-admin-reportes",
-    path: "/store/:slug()/admin/reportes",
-    meta: { ...__nuxt_page_meta$a || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./reportes-B13CR6wI.mjs')
-  },
-  {
-    name: "store-slug-checkout",
-    path: "/store/:slug()/checkout",
-    meta: __nuxt_page_meta$9 || {},
-    component: () => import('./index-RUnCzGdM.mjs')
-  },
-  {
-    name: "store-slug-productos-crear",
-    path: "/store/:slug()/productos/crear",
-    meta: { ...__nuxt_page_meta$8 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./crear-DJ2wOmAY.mjs')
-  },
-  {
-    name: "store-slug-productos",
-    path: "/store/:slug()/productos",
-    meta: __nuxt_page_meta$7 || {},
-    component: () => import('./index-CeMo5YeX.mjs')
-  },
-  {
-    name: "store-slug-admin-inventario",
-    path: "/store/:slug()/admin/inventario",
-    meta: { ...__nuxt_page_meta$6 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./inventario-BlJyP6Np.mjs')
-  },
-  {
-    name: "store-slug-admin-orders-id",
-    path: "/store/:slug()/admin/orders/:id()",
-    meta: { ...__nuxt_page_meta$5 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./_id_-CMaSlT9o.mjs')
-  },
-  {
-    name: "store-slug-admin-orders",
-    path: "/store/:slug()/admin/orders",
-    meta: { ...__nuxt_page_meta$4 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./index-D7EdSZGO.mjs')
-  },
-  {
-    name: "store-slug-admin-settings",
-    path: "/store/:slug()/admin/settings",
-    meta: { ...__nuxt_page_meta$3 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./index-B1DVCS3B.mjs')
-  },
-  {
-    name: "store-slug-admin-productos",
-    path: "/store/:slug()/admin/productos",
-    component: () => import('./index-CgAmosui.mjs')
-  },
-  {
-    name: "store-slug-admin-productos-nuevo",
-    path: "/store/:slug()/admin/productos/nuevo",
-    meta: { ...__nuxt_page_meta$2 || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./nuevo-C2d5baFH.mjs')
-  },
-  {
-    name: "store-slug-productos-product_slug",
-    path: "/store/:slug()/productos/:product_slug()",
-    meta: __nuxt_page_meta$1 || {},
-    component: () => import('./_product_slug_-B2SPBETo.mjs')
-  },
-  {
-    name: "store-slug-admin-productos-product_slug-editar",
-    path: "/store/:slug()/admin/productos/:product_slug()/editar",
-    meta: { ...__nuxt_page_meta || {}, ...{ "middleware": ["tenant", "auth"] } },
-    component: () => import('./editar-BVHAXMwq.mjs')
+    component: () => import('./index-C4m6sman.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -800,392 +496,6 @@ const validate = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to, from) => {
   });
   return error;
 });
-const __nuxt_component_1$1 = defineComponent({
-  name: "ServerPlaceholder",
-  render() {
-    return createElementBlock("div");
-  }
-});
-const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
-const __nuxt_component_1 = defineComponent({
-  name: "ClientOnly",
-  inheritAttrs: false,
-  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
-  ...false,
-  setup(props, { slots, attrs }) {
-    const mounted = shallowRef(false);
-    const vm = getCurrentInstance();
-    if (vm) {
-      vm._nuxtClientOnly = true;
-    }
-    provide(clientOnlySymbol, true);
-    return () => {
-      if (mounted.value) {
-        const vnodes = slots.default?.();
-        if (vnodes && vnodes.length === 1) {
-          return [cloneVNode(vnodes[0], attrs)];
-        }
-        return vnodes;
-      }
-      const slot = slots.fallback || slots.placeholder;
-      if (slot) {
-        return h(slot);
-      }
-      const fallbackStr = props.fallback || props.placeholder || "";
-      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
-      return createElementBlock(fallbackTag, attrs, fallbackStr);
-    };
-  }
-});
-function useRequestEvent(nuxtApp) {
-  nuxtApp ||= useNuxtApp();
-  return nuxtApp.ssrContext?.event;
-}
-const CookieDefaults = {
-  path: "/",
-  watch: true,
-  decode: (val) => destr(decodeURIComponent(val)),
-  encode: (val) => encodeURIComponent(typeof val === "string" ? val : JSON.stringify(val))
-};
-function useCookie(name, _opts) {
-  const opts = { ...CookieDefaults, ..._opts };
-  opts.filter ??= (key) => key === name;
-  const cookies = readRawCookies(opts) || {};
-  let delay;
-  if (opts.maxAge !== void 0) {
-    delay = opts.maxAge * 1e3;
-  } else if (opts.expires) {
-    delay = opts.expires.getTime() - Date.now();
-  }
-  const hasExpired = delay !== void 0 && delay <= 0;
-  const cookieValue = klona(hasExpired ? void 0 : cookies[name] ?? opts.default?.());
-  const cookie = ref(cookieValue);
-  {
-    const nuxtApp = useNuxtApp();
-    const writeFinalCookieValue = () => {
-      if (opts.readonly || isEqual(cookie.value, cookies[name])) {
-        return;
-      }
-      nuxtApp._cookies ||= {};
-      if (name in nuxtApp._cookies) {
-        if (isEqual(cookie.value, nuxtApp._cookies[name])) {
-          return;
-        }
-      }
-      nuxtApp._cookies[name] = cookie.value;
-      writeServerCookie(useRequestEvent(nuxtApp), name, cookie.value, opts);
-    };
-    const unhook = nuxtApp.hooks.hookOnce("app:rendered", writeFinalCookieValue);
-    nuxtApp.hooks.hookOnce("app:error", () => {
-      unhook();
-      return writeFinalCookieValue();
-    });
-  }
-  return cookie;
-}
-function readRawCookies(opts = {}) {
-  {
-    return parse(getRequestHeader(useRequestEvent(), "cookie") || "", opts);
-  }
-}
-function writeServerCookie(event, name, value, opts = {}) {
-  if (event) {
-    if (value !== null && value !== void 0) {
-      return setCookie(event, name, value, opts);
-    }
-    if (getCookie(event, name) !== void 0) {
-      return deleteCookie(event, name, opts);
-    }
-  }
-}
-let sessionBootstrapPromise = null;
-let profileFetchPromise = null;
-const parseRetryAfterHeader = (value) => {
-  if (typeof value !== "string" || !value.trim()) return null;
-  const asSeconds = Number(value);
-  if (Number.isFinite(asSeconds) && asSeconds > 0) {
-    return Math.ceil(asSeconds);
-  }
-  const asDate = Date.parse(value);
-  if (!Number.isNaN(asDate)) {
-    const seconds = Math.ceil((asDate - Date.now()) / 1e3);
-    if (seconds > 0) return seconds;
-  }
-  return null;
-};
-const parseDetailSeconds = (value) => {
-  if (typeof value !== "string") return null;
-  const match = value.match(/(\d+)\s*seconds?/i);
-  const parsed = Number(match?.[1] || 0);
-  if (Number.isFinite(parsed) && parsed > 0) return Math.ceil(parsed);
-  return null;
-};
-const withJitterMs = (baseMs) => {
-  const factor = 0.8 + Math.random() * 0.4;
-  return Math.max(1e3, Math.ceil(baseMs * factor));
-};
-const getProfileBackoffMsFromError = (error, fallbackMs = 1e4) => {
-  const retryAfter = error?.response?.headers?.get?.("retry-after") ?? error?.response?.headers?.["retry-after"] ?? error?.response?._data?.retry_after;
-  const headerSeconds = parseRetryAfterHeader(retryAfter);
-  if (headerSeconds) return withJitterMs(headerSeconds * 1e3);
-  const detailSeconds = parseDetailSeconds(error?.response?._data?.detail || error?.message);
-  if (detailSeconds) return withJitterMs(detailSeconds * 1e3);
-  return withJitterMs(fallbackMs);
-};
-const useAuthStore = defineStore("auth", {
-  state: () => ({
-    token: null,
-    refreshToken: null,
-    user: null,
-    loading: false,
-    error: null,
-    initialized: false,
-    profileBackoffUntil: 0
-  }),
-  getters: {
-    isAuthenticated: (state) => Boolean(state.token),
-    hasStores: (state) => Boolean(state.user?.memberships?.length || state.user?.is_staff),
-    isProfileBackoffActive: (state) => Date.now() < Number(state.profileBackoffUntil || 0)
-  },
-  actions: {
-    restoreFromCookies() {
-      const secure = "production" === "production";
-      const tokenCookie = useCookie("auth_token", { secure, path: "/" });
-      const refreshCookie = useCookie("refresh_token", { secure, path: "/" });
-      this.token = tokenCookie.value || null;
-      this.refreshToken = refreshCookie.value || null;
-    },
-    async initializeSession(options) {
-      if (sessionBootstrapPromise) {
-        return sessionBootstrapPromise;
-      }
-      sessionBootstrapPromise = (async () => {
-        if (!this.token || !this.refreshToken) {
-          this.restoreFromCookies();
-        }
-        if (!this.token && this.refreshToken) {
-          await this.refreshTokens();
-        }
-        if (!this.token) {
-          this.user = null;
-          return null;
-        }
-        if (options?.forceProfile || !this.user) {
-          return await this.fetchProfile();
-        }
-        return this.user;
-      })();
-      try {
-        return await sessionBootstrapPromise;
-      } finally {
-        this.initialized = true;
-        sessionBootstrapPromise = null;
-      }
-    },
-    async login(credentials) {
-      this.loading = true;
-      this.error = null;
-      const config = /* @__PURE__ */ useRuntimeConfig();
-      try {
-        const data = await $fetch(`${config.public.apiBase}/token/`, {
-          method: "POST",
-          body: credentials
-        });
-        this.token = data.access;
-        this.refreshToken = data.refresh;
-        const secure = "production" === "production";
-        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
-        useCookie("refresh_token", { maxAge: 60 * 60 * 24 * 7, sameSite: "lax", secure, path: "/" }).value = data.refresh;
-        await this.fetchProfile();
-      } catch (error) {
-        const detail = error?.response?._data?.detail || "No pudimos iniciar sesión";
-        this.error = detail;
-        throw new Error(detail);
-      } finally {
-        this.loading = false;
-      }
-    },
-    async register(payload) {
-      this.loading = true;
-      this.error = null;
-      const config = /* @__PURE__ */ useRuntimeConfig();
-      try {
-        const data = await $fetch(`${config.public.apiBase}/users/signup/`, {
-          method: "POST",
-          body: payload
-        });
-        this.token = data.access;
-        this.refreshToken = data.refresh;
-        this.user = data.user;
-        const secure = "production" === "production";
-        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
-        useCookie("refresh_token", { maxAge: 60 * 60 * 24 * 7, sameSite: "lax", secure, path: "/" }).value = data.refresh;
-      } catch (error) {
-        const detail = error?.response?._data?.detail || error?.response?._data || "No pudimos registrar tu cuenta";
-        this.error = detail;
-        throw new Error(detail);
-      } finally {
-        this.loading = false;
-      }
-    },
-    async fetchProfile() {
-      if (!this.token) {
-        this.restoreFromCookies();
-      }
-      if (!this.token) return null;
-      if (profileFetchPromise) {
-        return profileFetchPromise;
-      }
-      if (Date.now() < Number(this.profileBackoffUntil || 0)) {
-        return this.user;
-      }
-      const config = /* @__PURE__ */ useRuntimeConfig();
-      profileFetchPromise = (async () => {
-        try {
-          const profile = await $fetch(`${config.public.apiBase}/users/me/`, {
-            headers: { Authorization: `Bearer ${this.token}` }
-          });
-          this.profileBackoffUntil = 0;
-          this.user = profile;
-          return profile;
-        } catch (error) {
-          if (error?.response?.status === 429) {
-            this.profileBackoffUntil = Date.now() + getProfileBackoffMsFromError(error);
-            this.error = "Demasiadas solicitudes al servidor. Reintentaremos en unos segundos.";
-            return this.user;
-          }
-          const code = error?.response?._data?.code;
-          if (code === "token_not_valid" && this.refreshToken) {
-            const refreshed = await this.refreshTokens();
-            if (refreshed) {
-              try {
-                const profile = await $fetch(`${config.public.apiBase}/users/me/`, {
-                  headers: { Authorization: `Bearer ${refreshed}` }
-                });
-                this.profileBackoffUntil = 0;
-                this.user = profile;
-                return profile;
-              } catch {
-              }
-            }
-          }
-          const detail = error?.response?._data?.detail || "No pudimos cargar tu perfil";
-          this.error = detail;
-          return null;
-        } finally {
-          profileFetchPromise = null;
-        }
-      })();
-      return profileFetchPromise;
-    },
-    async refreshTokens() {
-      if (!this.refreshToken) {
-        this.restoreFromCookies();
-      }
-      if (!this.refreshToken) return null;
-      const config = /* @__PURE__ */ useRuntimeConfig();
-      try {
-        const data = await $fetch(`${config.public.apiBase}/token/refresh/`, {
-          method: "POST",
-          body: { refresh: this.refreshToken }
-        });
-        this.token = data.access;
-        const secure = "production" === "production";
-        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
-        return data.access;
-      } catch (error) {
-        this.logout();
-        return null;
-      }
-    },
-    async fetchMyStores() {
-      if (!this.token) {
-        this.restoreFromCookies();
-      }
-      if (!this.token) return [];
-      const config = /* @__PURE__ */ useRuntimeConfig();
-      try {
-        return await $fetch(`${config.public.apiBase}/stores/mine/`, {
-          headers: { Authorization: `Bearer ${this.token}` }
-        });
-      } catch (error) {
-        const code = error?.response?._data?.code;
-        if (code === "token_not_valid" && this.refreshToken) {
-          const refreshed = await this.refreshTokens();
-          if (refreshed) {
-            try {
-              return await $fetch(`${config.public.apiBase}/stores/mine/`, {
-                headers: { Authorization: `Bearer ${refreshed}` }
-              });
-            } catch (e) {
-              console.error("Reintento falló al cargar tus tiendas", e);
-            }
-          }
-        }
-        console.error("No pudimos cargar tus tiendas", error);
-        return [];
-      }
-    },
-    logout(options) {
-      const fallbackSlug = this.user?.memberships?.[0]?.store?.slug;
-      const redirect = options?.redirectTo ? options.redirectTo : fallbackSlug ? `/store/${fallbackSlug}/admin/login` : "/";
-      this.token = null;
-      this.refreshToken = null;
-      this.user = null;
-      this.initialized = true;
-      const secure = "production" === "production";
-      useCookie("auth_token", { secure, path: "/" }).value = null;
-      useCookie("refresh_token", { secure, path: "/" }).value = null;
-      navigateTo(redirect);
-    }
-  }
-});
-const sectionByPath = (path) => {
-  if (path === "/dashboard" || path.startsWith("/dashboard/tickets")) return "overview";
-  if (path.startsWith("/dashboard/recursos-humanos")) return "hr";
-  if (path.startsWith("/dashboard/analisis-financiero")) return "finance";
-  if (path.startsWith("/dashboard/analisis")) return "analytics";
-  return "other";
-};
-const canAccessByRole = (section, roleSet, hasStores) => {
-  if (section === "other") return hasStores;
-  if (section === "overview") return hasStores;
-  if (section === "hr") return roleSet.has("ADMIN") || roleSet.has("HR");
-  if (section === "finance") return roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("FINANCE");
-  if (section === "analytics") return roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("DATA_ANALYST");
-  return false;
-};
-const resolveDefaultDashboardRoute = (roleSet, hasStores) => {
-  if (!hasStores) return "/";
-  if (roleSet.has("ADMIN") || roleSet.has("HR")) return "/dashboard/recursos-humanos";
-  if (roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("FINANCE")) return "/dashboard/analisis-financiero";
-  if (roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("DATA_ANALYST")) return "/dashboard/analisis";
-  return "/dashboard";
-};
-const dashboard_45access_45global = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
-  let __temp, __restore;
-  if (!to.path.startsWith("/dashboard")) return;
-  const auth = useAuthStore();
-  const profile = ([__temp, __restore] = executeAsync(() => auth.initializeSession({ forceProfile: true })), __temp = await __temp, __restore(), __temp);
-  if (!profile) {
-    return navigateTo("/login");
-  }
-  const memberships = Array.isArray(profile.memberships) ? profile.memberships : [];
-  const hasStores = memberships.length > 0 || Boolean(profile.is_staff);
-  const roles = /* @__PURE__ */ new Set();
-  memberships.forEach((membership) => {
-    const roleList = Array.isArray(membership.roles) ? membership.roles : [];
-    roleList.forEach((role) => roles.add(String(role || "").toUpperCase()));
-  });
-  if (profile.is_staff) {
-    roles.add("ADMIN");
-  }
-  const section = sectionByPath(to.path);
-  if (canAccessByRole(section, roles, hasStores)) {
-    return;
-  }
-  return navigateTo(resolveDefaultDashboardRoute(roles, hasStores));
-});
 const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
   {
     return;
@@ -1193,13 +503,9 @@ const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async 
 });
 const globalMiddleware = [
   validate,
-  dashboard_45access_45global,
   manifest_45route_45rule
 ];
-const namedMiddleware = {
-  auth: () => import('./auth-7ZwSr8TV.mjs'),
-  tenant: () => import('./tenant-Lr2HcrDv.mjs')
-};
+const namedMiddleware = {};
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
   enforce: "pre",
@@ -1395,6 +701,11 @@ const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
     return { provide: { router } };
   }
 });
+function definePayloadReducer(name, reduce) {
+  {
+    useNuxtApp().ssrContext._payloadReducers[name] = reduce;
+  }
+}
 const reducers = [
   ["NuxtError", (data) => isNuxtError(data) && data.toJSON()],
   ["EmptyShallowRef", (data) => isRef(data) && isShallow(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
@@ -1412,45 +723,414 @@ const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__
     }
   }
 });
+let activePinia;
+const setActivePinia = (pinia) => activePinia = pinia;
+const piniaSymbol = (
+  /* istanbul ignore next */
+  /* @__PURE__ */ Symbol()
+);
+function isPlainObject(o) {
+  return o && typeof o === "object" && Object.prototype.toString.call(o) === "[object Object]" && typeof o.toJSON !== "function";
+}
+var MutationType;
+(function(MutationType2) {
+  MutationType2["direct"] = "direct";
+  MutationType2["patchObject"] = "patch object";
+  MutationType2["patchFunction"] = "patch function";
+})(MutationType || (MutationType = {}));
+function createPinia() {
+  const scope = effectScope(true);
+  const state = scope.run(() => ref({}));
+  let _p = [];
+  let toBeInstalled = [];
+  const pinia = markRaw({
+    install(app) {
+      setActivePinia(pinia);
+      {
+        pinia._a = app;
+        app.provide(piniaSymbol, pinia);
+        app.config.globalProperties.$pinia = pinia;
+        toBeInstalled.forEach((plugin2) => _p.push(plugin2));
+        toBeInstalled = [];
+      }
+    },
+    use(plugin2) {
+      if (!this._a && true) {
+        toBeInstalled.push(plugin2);
+      } else {
+        _p.push(plugin2);
+      }
+      return this;
+    },
+    _p,
+    // it's actually undefined here
+    // @ts-expect-error
+    _a: null,
+    _e: scope,
+    _s: /* @__PURE__ */ new Map(),
+    state
+  });
+  return pinia;
+}
+const noop = () => {
+};
+function addSubscription(subscriptions, callback, detached, onCleanup = noop) {
+  subscriptions.push(callback);
+  const removeSubscription = () => {
+    const idx = subscriptions.indexOf(callback);
+    if (idx > -1) {
+      subscriptions.splice(idx, 1);
+      onCleanup();
+    }
+  };
+  if (!detached && getCurrentScope()) {
+    onScopeDispose(removeSubscription);
+  }
+  return removeSubscription;
+}
+function triggerSubscriptions(subscriptions, ...args) {
+  subscriptions.slice().forEach((callback) => {
+    callback(...args);
+  });
+}
+const fallbackRunWithContext = (fn) => fn();
+const ACTION_MARKER = /* @__PURE__ */ Symbol();
+const ACTION_NAME = /* @__PURE__ */ Symbol();
+function mergeReactiveObjects(target, patchToApply) {
+  if (target instanceof Map && patchToApply instanceof Map) {
+    patchToApply.forEach((value, key) => target.set(key, value));
+  } else if (target instanceof Set && patchToApply instanceof Set) {
+    patchToApply.forEach(target.add, target);
+  }
+  for (const key in patchToApply) {
+    if (!patchToApply.hasOwnProperty(key))
+      continue;
+    const subPatch = patchToApply[key];
+    const targetValue = target[key];
+    if (isPlainObject(targetValue) && isPlainObject(subPatch) && target.hasOwnProperty(key) && !isRef(subPatch) && !isReactive(subPatch)) {
+      target[key] = mergeReactiveObjects(targetValue, subPatch);
+    } else {
+      target[key] = subPatch;
+    }
+  }
+  return target;
+}
+const skipHydrateSymbol = (
+  /* istanbul ignore next */
+  /* @__PURE__ */ Symbol()
+);
+function shouldHydrate(obj) {
+  return !isPlainObject(obj) || !obj.hasOwnProperty(skipHydrateSymbol);
+}
+const { assign } = Object;
+function isComputed(o) {
+  return !!(isRef(o) && o.effect);
+}
+function createOptionsStore(id, options, pinia, hot) {
+  const { state, actions, getters } = options;
+  const initialState = pinia.state.value[id];
+  let store;
+  function setup() {
+    if (!initialState && (true)) {
+      {
+        pinia.state.value[id] = state ? state() : {};
+      }
+    }
+    const localState = toRefs(pinia.state.value[id]);
+    return assign(localState, actions, Object.keys(getters || {}).reduce((computedGetters, name) => {
+      computedGetters[name] = markRaw(computed(() => {
+        setActivePinia(pinia);
+        const store2 = pinia._s.get(id);
+        return getters[name].call(store2, store2);
+      }));
+      return computedGetters;
+    }, {}));
+  }
+  store = createSetupStore(id, setup, options, pinia, hot, true);
+  return store;
+}
+function createSetupStore($id, setup, options = {}, pinia, hot, isOptionsStore) {
+  let scope;
+  const optionsForPlugin = assign({ actions: {} }, options);
+  const $subscribeOptions = { deep: true };
+  let isListening;
+  let isSyncListening;
+  let subscriptions = [];
+  let actionSubscriptions = [];
+  let debuggerEvents;
+  const initialState = pinia.state.value[$id];
+  if (!isOptionsStore && !initialState && (true)) {
+    {
+      pinia.state.value[$id] = {};
+    }
+  }
+  ref({});
+  let activeListener;
+  function $patch(partialStateOrMutator) {
+    let subscriptionMutation;
+    isListening = isSyncListening = false;
+    if (typeof partialStateOrMutator === "function") {
+      partialStateOrMutator(pinia.state.value[$id]);
+      subscriptionMutation = {
+        type: MutationType.patchFunction,
+        storeId: $id,
+        events: debuggerEvents
+      };
+    } else {
+      mergeReactiveObjects(pinia.state.value[$id], partialStateOrMutator);
+      subscriptionMutation = {
+        type: MutationType.patchObject,
+        payload: partialStateOrMutator,
+        storeId: $id,
+        events: debuggerEvents
+      };
+    }
+    const myListenerId = activeListener = /* @__PURE__ */ Symbol();
+    nextTick().then(() => {
+      if (activeListener === myListenerId) {
+        isListening = true;
+      }
+    });
+    isSyncListening = true;
+    triggerSubscriptions(subscriptions, subscriptionMutation, pinia.state.value[$id]);
+  }
+  const $reset = isOptionsStore ? function $reset2() {
+    const { state } = options;
+    const newState = state ? state() : {};
+    this.$patch(($state) => {
+      assign($state, newState);
+    });
+  } : (
+    /* istanbul ignore next */
+    noop
+  );
+  function $dispose() {
+    scope.stop();
+    subscriptions = [];
+    actionSubscriptions = [];
+    pinia._s.delete($id);
+  }
+  const action = (fn, name = "") => {
+    if (ACTION_MARKER in fn) {
+      fn[ACTION_NAME] = name;
+      return fn;
+    }
+    const wrappedAction = function() {
+      setActivePinia(pinia);
+      const args = Array.from(arguments);
+      const afterCallbackList = [];
+      const onErrorCallbackList = [];
+      function after(callback) {
+        afterCallbackList.push(callback);
+      }
+      function onError(callback) {
+        onErrorCallbackList.push(callback);
+      }
+      triggerSubscriptions(actionSubscriptions, {
+        args,
+        name: wrappedAction[ACTION_NAME],
+        store,
+        after,
+        onError
+      });
+      let ret;
+      try {
+        ret = fn.apply(this && this.$id === $id ? this : store, args);
+      } catch (error) {
+        triggerSubscriptions(onErrorCallbackList, error);
+        throw error;
+      }
+      if (ret instanceof Promise) {
+        return ret.then((value) => {
+          triggerSubscriptions(afterCallbackList, value);
+          return value;
+        }).catch((error) => {
+          triggerSubscriptions(onErrorCallbackList, error);
+          return Promise.reject(error);
+        });
+      }
+      triggerSubscriptions(afterCallbackList, ret);
+      return ret;
+    };
+    wrappedAction[ACTION_MARKER] = true;
+    wrappedAction[ACTION_NAME] = name;
+    return wrappedAction;
+  };
+  const partialStore = {
+    _p: pinia,
+    // _s: scope,
+    $id,
+    $onAction: addSubscription.bind(null, actionSubscriptions),
+    $patch,
+    $reset,
+    $subscribe(callback, options2 = {}) {
+      const removeSubscription = addSubscription(subscriptions, callback, options2.detached, () => stopWatcher());
+      const stopWatcher = scope.run(() => watch(() => pinia.state.value[$id], (state) => {
+        if (options2.flush === "sync" ? isSyncListening : isListening) {
+          callback({
+            storeId: $id,
+            type: MutationType.direct,
+            events: debuggerEvents
+          }, state);
+        }
+      }, assign({}, $subscribeOptions, options2)));
+      return removeSubscription;
+    },
+    $dispose
+  };
+  const store = reactive(partialStore);
+  pinia._s.set($id, store);
+  const runWithContext = pinia._a && pinia._a.runWithContext || fallbackRunWithContext;
+  const setupStore = runWithContext(() => pinia._e.run(() => (scope = effectScope()).run(() => setup({ action }))));
+  for (const key in setupStore) {
+    const prop = setupStore[key];
+    if (isRef(prop) && !isComputed(prop) || isReactive(prop)) {
+      if (!isOptionsStore) {
+        if (initialState && shouldHydrate(prop)) {
+          if (isRef(prop)) {
+            prop.value = initialState[key];
+          } else {
+            mergeReactiveObjects(prop, initialState[key]);
+          }
+        }
+        {
+          pinia.state.value[$id][key] = prop;
+        }
+      }
+    } else if (typeof prop === "function") {
+      const actionValue = action(prop, key);
+      {
+        setupStore[key] = actionValue;
+      }
+      optionsForPlugin.actions[key] = prop;
+    } else ;
+  }
+  {
+    assign(store, setupStore);
+    assign(toRaw(store), setupStore);
+  }
+  Object.defineProperty(store, "$state", {
+    get: () => pinia.state.value[$id],
+    set: (state) => {
+      $patch(($state) => {
+        assign($state, state);
+      });
+    }
+  });
+  pinia._p.forEach((extender) => {
+    {
+      assign(store, scope.run(() => extender({
+        store,
+        app: pinia._a,
+        pinia,
+        options: optionsForPlugin
+      })));
+    }
+  });
+  if (initialState && isOptionsStore && options.hydrate) {
+    options.hydrate(store.$state, initialState);
+  }
+  isListening = true;
+  isSyncListening = true;
+  return store;
+}
+// @__NO_SIDE_EFFECTS__
+function defineStore(idOrOptions, setup, setupOptions) {
+  let id;
+  let options;
+  const isSetupStore = typeof setup === "function";
+  if (typeof idOrOptions === "string") {
+    id = idOrOptions;
+    options = isSetupStore ? setupOptions : setup;
+  } else {
+    options = idOrOptions;
+    id = idOrOptions.id;
+  }
+  function useStore(pinia, hot) {
+    const hasContext = hasInjectionContext();
+    pinia = // in test mode, ignore the argument provided as we can always retrieve a
+    // pinia instance with getActivePinia()
+    (pinia) || (hasContext ? inject(piniaSymbol, null) : null);
+    if (pinia)
+      setActivePinia(pinia);
+    pinia = activePinia;
+    if (!pinia._s.has(id)) {
+      if (isSetupStore) {
+        createSetupStore(id, setup, options, pinia);
+      } else {
+        createOptionsStore(id, options, pinia);
+      }
+    }
+    const store = pinia._s.get(id);
+    return store;
+  }
+  useStore.$id = id;
+  return useStore;
+}
+const __nuxt_component_1 = defineComponent({
+  name: "ServerPlaceholder",
+  render() {
+    return createElementBlock("div");
+  }
+});
+const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
+defineComponent({
+  name: "ClientOnly",
+  inheritAttrs: false,
+  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
+  ...false,
+  setup(props, { slots, attrs }) {
+    const mounted = shallowRef(false);
+    const vm = getCurrentInstance();
+    if (vm) {
+      vm._nuxtClientOnly = true;
+    }
+    provide(clientOnlySymbol, true);
+    return () => {
+      if (mounted.value) {
+        const vnodes = slots.default?.();
+        if (vnodes && vnodes.length === 1) {
+          return [cloneVNode(vnodes[0], attrs)];
+        }
+        return vnodes;
+      }
+      const slot = slots.fallback || slots.placeholder;
+      if (slot) {
+        return h(slot);
+      }
+      const fallbackStr = props.fallback || props.placeholder || "";
+      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
+      return createElementBlock(fallbackTag, attrs, fallbackStr);
+    };
+  }
+});
 const plugin = /* @__PURE__ */ defineNuxtPlugin({
   name: "pinia",
   setup(nuxtApp) {
     const pinia = createPinia();
     nuxtApp.vueApp.use(pinia);
     setActivePinia(pinia);
-    if (nuxtApp.payload && nuxtApp.payload.pinia) {
-      pinia.state.value = nuxtApp.payload.pinia;
+    {
+      nuxtApp.payload.pinia = pinia.state.value;
     }
     return {
       provide: {
         pinia
       }
     };
-  },
-  hooks: {
-    "app:rendered"() {
-      const nuxtApp = useNuxtApp();
-      nuxtApp.payload.pinia = toRaw(nuxtApp.$pinia).state.value;
-      setActivePinia(void 0);
-    }
   }
 });
 const components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:global-components"
 });
 const plugins = [
-  payloadPlugin,
   unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU,
   plugin$1,
   revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms,
   plugin,
   components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8
 ];
-const layouts = {
-  admin: defineAsyncComponent(() => import('./admin-D1cTjoDm.mjs').then((m) => m.default || m)),
-  default: defineAsyncComponent(() => import('./default-BOa3hiwk.mjs').then((m) => m.default || m)),
-  store: defineAsyncComponent(() => import('./store-HLY1IsUn.mjs').then((m) => m.default || m))
-};
+const layouts = {};
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
   inheritAttrs: false,
@@ -1472,7 +1152,7 @@ const nuxtLayoutProps = {
     default: null
   }
 };
-const __nuxt_component_0$1 = defineComponent({
+const __nuxt_component_0 = defineComponent({
   name: "NuxtLayout",
   inheritAttrs: false,
   props: nuxtLayoutProps,
@@ -1610,7 +1290,7 @@ const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   }
 });
 const RouteProvider = defineRouteProvider();
-const __nuxt_component_0 = defineComponent({
+const __nuxt_component_2 = defineComponent({
   name: "NuxtPage",
   inheritAttrs: false,
   props: {
@@ -1670,9 +1350,9 @@ const _export_sfc = (sfc, props) => {
 };
 const _sfc_main$2 = {};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLayout = __nuxt_component_0$1;
-  const _component_NuxtRouteAnnouncer = __nuxt_component_1$1;
-  const _component_NuxtPage = __nuxt_component_0;
+  const _component_NuxtLayout = __nuxt_component_0;
+  const _component_NuxtRouteAnnouncer = __nuxt_component_1;
+  const _component_NuxtPage = __nuxt_component_2;
   _push(ssrRenderComponent(_component_NuxtLayout, _attrs, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -1709,8 +1389,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-CeZ3U76L.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-MN87qETS.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-BRhzLO2t.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-Gq5r8UNK.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));
@@ -1791,5 +1471,5 @@ let entry;
 }
 const entry_default = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, useRuntimeConfig as a, useAuthStore as b, __nuxt_component_1 as c, __nuxt_component_0 as d, entry_default as default, useRouter as e, nuxtLinkDefaults as f, useRoute as g, defineNuxtRouteMiddleware as h, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
+export { _export_sfc as _, useRuntimeConfig as a, useRouter as b, nuxtLinkDefaults as c, defineStore as d, entry_default as default, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
 //# sourceMappingURL=server.mjs.map

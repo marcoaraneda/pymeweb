@@ -1,1 +1,0 @@
-const r=()=>{const i="/logoPW.png",n=e=>e?.image_url?a(e.image_url):e?.image?a(e.image):e?.images?.length>0?a(e.images[0].image):i,a=e=>e?e.includes("res.cloudinary.com")?e.replace("/upload/","/upload/f_auto,q_auto/"):e:"";return{getProductImage:n,optimizeCloudinary:a}};export{r as u};
