@@ -22,7 +22,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_API_BASE ||
         process.env.API_BASE ||
         (process.env.NODE_ENV === 'production'
-          ? 'https://pymeweb-backend.onrender.com/api'
+          ? 'https://pymeweb-api.onrender.com/api'
           : 'http://127.0.0.1:8000/api'),
       cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
       cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET || '',
@@ -50,7 +50,7 @@ export default defineNuxtConfig({
             "frame-src 'self' https://accounts.google.com",
             "worker-src 'self' blob:",
             // Permite API y websockets
-            "connect-src 'self' http://127.0.0.1:8000 http://localhost:8000 http://192.168.18.61:8000 https://pymeweb-backend.onrender.com ws://localhost:* ws://127.0.0.1:* ws://192.168.18.61:* https://api.cloudinary.com https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com",
+            "connect-src 'self' http://127.0.0.1:8000 http://localhost:8000 http://192.168.18.61:8000 https://pymeweb-api.onrender.com ws://localhost:* ws://127.0.0.1:* ws://192.168.18.61:* https://api.cloudinary.com https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com",
           ].join('; ')
         },
         { 'http-equiv': 'Permissions-Policy', content: 'camera=(), microphone=(), geolocation=(), payment=()' },
