@@ -1,41 +1,6 @@
 services:
-  - type: web
-    name: pymeweb-backend
-    env: python
-    plan: standard
-    buildCommand: pip install -r requirements.txt && python manage.py migrate
-    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
-    envVars:
-      - key: DJANGO_SECRET_KEY
-        generateValue: true
-      - key: DJANGO_DEBUG
-        value: "False"
-      - key: DB_NAME
-        value: pymeweb
-      - key: DB_USER
-        value: neondb_owner
-      - key: DB_PASSWORD
-        value: npg_Wn1DEB4QFlwq
-      - key: DB_HOST
-        value: ep-wispy-river-ackhbou0-pooler.sa-east-1.aws.neon.tech
-      - key: DB_PORT
-        value: "5432"
-      - key: DB_SSLMODE
-        value: require
-      - key: ALLOWED_HOSTS
-        value: "*"
-      - key: CORS_ALLOW_ALL_ORIGINS
-        value: "True"
-  # Frontend Static Site
   - type: static_site
     name: pymeweb
-    staticPublishPath: ./public
+    env: node
     buildCommand: cd pymeweb-frontend && npm run build:static-deploy
-    envVars:
-      - key: NUXT_PUBLIC_API_BASE
-        value: https://pymeweb-backend.onrender.com/api
-    routes:
-      - path: /_nuxt/*
-        methods: GET
-      - path: /*
-        destination: /index.html
+    publishPath: pymeweb-frontend/public
