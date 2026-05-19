@@ -57,23 +57,65 @@ class ProductPublicDetailAPIView(generics.RetrieveAPIView):
         )
 
 
+class LatestProductsListAPIView(generics.ListAPIView):
+    """Endpoint para obtener los productos más recientes de todas las tiendas (no del marketplace)."""
+    permission_classes = [AllowAny]
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        limit = self.request.query_params.get("limit", 12)
+        ordering = self.request.query_params.get("ordering", "-created_at")
+        
+        qs = (
+            Product.objects.filter(is_active=True, is_marketplace=False)
+            .select_related("category", "store", "submitted_by")
+            .prefetch_related("variants", "images")
+            .order_by(ordering)
+        )
+        
+        if limit:
+            try:
+                limit_int = int(limit)
+                qs = qs[:limit_int]
+            except (ValueError, TypeError):
+                pass
+        
+        return qs
+
+
 class MarketplaceProductListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = ProductSerializer
 
     def get_queryset(self):
         limit = self.request.query_params.get("limit")
-        qs = (
-            Product.objects.filter(is_active=True, is_marketplace=True)
-            .select_related("category", "store", "submitted_by")
-            .prefetch_related("variants", "images")
-            .order_by("-created_at")
-        )
+        store_only = self.request.query_params.get("store_only")
+        ordering = self.request.query_params.get("ordering", "-created_at")
+        
+        if store_only in ("1", "true", "True"):
+            # Productos de tiendas normales en marketplace
+            qs = (
+                Product.objects.filter(is_active=True, is_marketplace=False)
+                .select_related("category", "store", "submitted_by")
+                .prefetch_related("variants", "images")
+                .order_by(ordering)
+            )
+        else:
+            # Productos del marketplace puro
+            qs = (
+                Product.objects.filter(is_active=True, is_marketplace=True)
+                .select_related("category", "store", "submitted_by")
+                .prefetch_related("variants", "images")
+                .order_by(ordering)
+            )
+        
         if limit:
             try:
-                qs = qs[: int(limit)]
-            except ValueError:
+                limit_int = int(limit)
+                qs = qs[:limit_int]
+            except (ValueError, TypeError):
                 pass
+        
         return qs
 
 
