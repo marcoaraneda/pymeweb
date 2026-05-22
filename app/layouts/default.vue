@@ -42,6 +42,16 @@
 
 <style scoped>
 .nav-link {
-  @apply rounded-xl px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/5 hover:text-white;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgb(255, 255, 255);
 }
 </style>

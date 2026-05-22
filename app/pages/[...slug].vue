@@ -56,6 +56,21 @@ const currentPath = computed(() => route.path)
 
 <style scoped>
 .quick-link {
-  @apply flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-medium text-white/80 transition hover:border-cyan-300/40 hover:bg-cyan-400/10 hover:text-white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.quick-link:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(34, 211, 238, 0.1);
+  color: rgb(255, 255, 255);
 }
 </style>
