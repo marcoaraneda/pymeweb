@@ -32,15 +32,15 @@
                 Crear mi tienda
               <Star class="h-4 w-4" aria-hidden="true" />
             </button>
-            <NuxtLink
+            <a
               v-else
-              to="/login"
+              href="#tiendas"
               class="inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold shadow-lg shadow-black/20 transition hover:-translate-y-0.5"
               :style="{ backgroundColor: theme.accent, color: '#fff' }"
             >
-              Iniciar sesión
+              Explorar tiendas
               <ChevronRight class="h-4 w-4" aria-hidden="true" />
-            </NuxtLink>
+            </a>
             <a
               href="#tiendas"
               class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 px-5 py-3 font-semibold text-white hover:border-white/40 hover:bg-white/5 transition"
@@ -89,28 +89,29 @@
             </div>
 
             <div class="mt-5 grid grid-cols-2 gap-2 md:hidden">
-              <NuxtLink
+              <button
                 v-if="auth.isAuthenticated"
-                to="/dashboard"
+                type="button"
                 class="inline-flex items-center justify-center rounded-xl px-3 py-2 text-xs font-semibold text-white"
                 :style="{ backgroundColor: theme.accent }"
+                @click="openCreateStoreModal"
               >
-                Dashboard
-              </NuxtLink>
-              <NuxtLink
+                Crear mi tienda
+              </button>
+              <a
                 v-else
-                to="/login"
+                href="#tiendas"
                 class="inline-flex items-center justify-center rounded-xl px-3 py-2 text-xs font-semibold text-white"
                 :style="{ backgroundColor: theme.accent }"
               >
-                Iniciar sesión
-              </NuxtLink>
-              <NuxtLink
-                to="/marketplace"
+                Explorar
+              </a>
+              <a
+                href="#marketplace"
                 class="inline-flex items-center justify-center rounded-xl border border-white/30 px-3 py-2 text-xs font-semibold text-white"
               >
                 Ir al marketplace
-              </NuxtLink>
+              </a>
               <a
                 href="#tiendas"
                 class="inline-flex items-center justify-center rounded-xl border border-white/30 px-3 py-2 text-xs font-semibold text-white"
@@ -160,13 +161,13 @@
             <h3 class="mt-1 text-3xl font-extrabold leading-tight sm:text-4xl">Descubre tiendas activas en Pymeweb</h3>
             <p class="mt-2 max-w-2xl text-white/78">Filtra por nombre, guarda favoritas y entra directo a comprar desde cualquier dispositivo.</p>
           </div>
-          <NuxtLink
-            to="/tiendas"
+          <a
+            href="#tiendas"
             class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-white/20"
           >
             Ver todas las tiendas
             <ChevronRight class="h-4 w-4" aria-hidden="true" />
-          </NuxtLink>
+          </a>
         </div>
 
         <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_230px_230px] xl:items-end">
@@ -188,12 +189,12 @@
             <Heart class="h-4 w-4" :class="showFavoriteStoresOnly ? 'fill-current text-fuchsia-200' : 'text-cyan-200'" />
             {{ showFavoriteStoresOnly ? 'Solo favoritos' : 'Mostrar todos' }}
           </button>
-          <NuxtLink
-            to="/tiendas"
+          <a
+            href="#tiendas"
             class="hidden h-11 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20 xl:inline-flex"
           >
             Explorar catálogo
-          </NuxtLink>
+          </a>
         </div>
       </div>
 
@@ -217,7 +218,7 @@
       </div>
     </section>
 
-    <section class="relative z-10 mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-9 reveal" style="animation-delay: 0.08s;">
+    <section id="marketplace" class="relative z-10 mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-9 reveal" style="animation-delay: 0.08s;">
       <div class="rounded-[2rem] border border-[#0f274f]/20 bg-gradient-to-br from-slate-950 via-[#0f274f] to-amber-500 p-5 text-white shadow-2xl sm:p-6">
         <div class="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
@@ -235,13 +236,13 @@
               <Heart class="h-4 w-4" :class="showFavoriteProductsOnly ? 'fill-current text-amber-200' : 'text-amber-100'" />
               {{ showFavoriteProductsOnly ? 'Solo productos favoritos' : 'Todos los productos' }}
             </button>
-            <NuxtLink
-              to="/marketplace"
+            <a
+              href="#marketplace"
               class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-white/20 sm:col-span-2 lg:col-span-1"
             >
               Ir al PW Marketplace
               <ChevronRight class="h-4 w-4" aria-hidden="true" />
-            </NuxtLink>
+            </a>
           </div>
         </div>
       </div>
