@@ -38,22 +38,30 @@ const error = ref<string | null>(null)
 const onSubmit = async () => {
   error.value = null
   try {
-    const res = await $fetch(`${config.public.apiBase}/auth/login/`, {
+    // Token obtain endpoint (JWT pair)
+    const res = await $fetch(`${config.public.apiBase}/token/`, {
       method: 'POST',
-      body: { email: email.value, password: password.value },
+      body: { username: email.value, password: password.value },
     })
 
-    // support common JWT shapes
-    const token = (res as any).token || (res as any).access || (res as any).access_token
+    const token = (res as any).access || (res as any).token || (res as any).access_token
     if (token) {
       auth.setToken(token)
-      // redirect to home
+      try {
+        const me = await $fetch(`${config.public.apiBase}/users/me/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        // populate store user
+        ;(auth as any).user = me
+      } catch {
+        // ignore user fetch failure
+      }
       navigateTo('/')
     } else {
       error.value = 'No se obtuvo token desde el servidor.'
     }
   } catch (err: any) {
-    error.value = err?.message || 'Error al iniciar sesión.'
+    error.value = err?.data?.detail || err?.message || 'Error al iniciar sesión.'
   }
 }
 </script>

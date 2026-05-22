@@ -32,7 +32,10 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
 const config = useRuntimeConfig()
+const auth = useAuthStore()
 
 const name = ref('')
 const email = ref('')
@@ -44,13 +47,37 @@ const onSubmit = async () => {
   message.value = null
   error.value = null
   try {
-    await $fetch(`${config.public.apiBase}/auth/register/`, {
+    // Attempt signup
+    await $fetch(`${config.public.apiBase}/users/signup/`, {
       method: 'POST',
-      body: { name: name.value, email: email.value, password: password.value },
+      body: { username: email.value, email: email.value, password: password.value, first_name: name.value },
     })
+
+    // Try to log in automatically
+    try {
+      const tokenRes = await $fetch(`${config.public.apiBase}/token/`, {
+        method: 'POST',
+        body: { username: email.value, password: password.value },
+      })
+      const token = (tokenRes as any).access || (tokenRes as any).token || (tokenRes as any).access_token
+      if (token) {
+        auth.setToken(token)
+        try {
+          const me = await $fetch(`${config.public.apiBase}/users/me/`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          ;(auth as any).user = me
+        } catch {}
+        navigateTo('/')
+        return
+      }
+    } catch {
+      // ignore token obtain failure, fallthrough to message
+    }
+
     message.value = 'Cuenta creada. Revisa tu correo o ingresa.'
   } catch (err: any) {
-    error.value = err?.message || 'Error al crear cuenta.'
+    error.value = err?.data?.detail || err?.message || 'Error al crear cuenta.'
   }
 }
 </script>
