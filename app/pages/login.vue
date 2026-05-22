@@ -1,0 +1,61 @@
+<template>
+  <div class="mx-auto max-w-md px-4 py-8">
+    <h1 class="text-2xl font-semibold mb-4">Ingresar</h1>
+
+    <form @submit.prevent="onSubmit" class="space-y-4">
+      <div>
+        <label class="block text-sm text-white/80 mb-1">Email</label>
+        <input v-model="email" type="email" required class="w-full rounded-md border px-3 py-2 bg-slate-900" />
+      </div>
+
+      <div>
+        <label class="block text-sm text-white/80 mb-1">Contraseña</label>
+        <input v-model="password" type="password" required class="w-full rounded-md border px-3 py-2 bg-slate-900" />
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button class="rounded-md bg-cyan-500 px-4 py-2 text-sm font-semibold text-white">Ingresar</button>
+        <NuxtLink to="/register" class="text-sm text-cyan-200">Crear cuenta</NuxtLink>
+      </div>
+
+      <div v-if="error" class="text-sm text-rose-400">{{ error }}</div>
+    </form>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useAuthStore } from '~/app/stores/auth'
+
+const config = useRuntimeConfig()
+const auth = useAuthStore()
+
+const email = ref('')
+const password = ref('')
+const error = ref<string | null>(null)
+
+const onSubmit = async () => {
+  error.value = null
+  try {
+    const res = await $fetch(`${config.public.apiBase}/auth/login/`, {
+      method: 'POST',
+      body: { email: email.value, password: password.value },
+    })
+
+    // support common JWT shapes
+    const token = (res as any).token || (res as any).access || (res as any).access_token
+    if (token) {
+      auth.setToken(token)
+      // redirect to home
+      navigateTo('/')
+    } else {
+      error.value = 'No se obtuvo token desde el servidor.'
+    }
+  } catch (err: any) {
+    error.value = err?.message || 'Error al iniciar sesión.'
+  }
+}
+</script>
+
+<style scoped>
+input { outline: none; }
+</style>
