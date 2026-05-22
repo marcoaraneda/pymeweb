@@ -1,14 +1,21 @@
 <template>
   <div class="mx-auto max-w-6xl px-4 py-8">
-    <h1 class="text-2xl font-semibold mb-6">Marketplace</h1>
+    <div class="relative rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h1 class="text-2xl font-semibold">Marketplace</h1>
+          <p class="text-sm text-white/70">Productos destacados y ofertas de tiendas</p>
+        </div>
+      </div>
 
-    <div v-if="loading" class="text-sm text-white/70">Cargando productos...</div>
+      <div v-if="loading" class="text-sm text-white/70">Cargando productos...</div>
 
-    <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <ProductCard v-for="p in products" :key="p.id" :product="p" />
+      <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ProductCard v-for="p in products" :key="p.id" :product="p" />
+      </div>
+
+      <div v-if="!loading && products.length===0" class="text-sm text-white/60 mt-4">No hay productos publicados aún.</div>
     </div>
-
-    <div v-if="!loading && products.length===0" class="text-sm text-white/60 mt-4">No hay productos publicados aún.</div>
   </div>
 </template>
 

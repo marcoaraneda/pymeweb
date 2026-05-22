@@ -1,15 +1,19 @@
 <template>
   <div class="mx-auto max-w-6xl px-4 py-8">
-    <h1 class="text-2xl font-semibold mb-6">Tiendas</h1>
+    <div class="relative rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl">
+      <h1 class="text-2xl font-semibold mb-2">Tiendas</h1>
+      <p class="text-sm text-white/70 mb-4">Explora las tiendas públicas registradas en Pymeweb</p>
 
-    <div v-if="loading" class="text-sm text-white/70">Cargando tiendas...</div>
-    <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <NuxtLink v-for="store in stores" :key="store.id" :to="`/store/${store.slug}`" class="block rounded-md border p-4 hover:bg-slate-900/50">
-        <div class="font-semibold text-white">{{ store.name }}</div>
-        <div class="text-sm text-white/60">{{ store.description }}</div>
-      </NuxtLink>
+      <div v-if="loading" class="text-sm text-white/70">Cargando tiendas...</div>
+      <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <NuxtLink v-for="store in stores" :key="store.id" :to="`/store/${store.slug}`" class="block rounded-2xl border border-white/10 p-4 hover:bg-slate-900/50">
+          <div class="font-semibold text-white">{{ store.name }}</div>
+          <div class="text-sm text-white/60">{{ store.description }}</div>
+        </NuxtLink>
+      </div>
+
+      <div v-if="!loading && stores.length===0" class="text-sm text-white/60 mt-4">No hay tiendas públicas aún.</div>
     </div>
-    <div v-if="!loading && stores.length===0" class="text-sm text-white/60 mt-4">No hay tiendas públicas aún.</div>
   </div>
 </template>
 

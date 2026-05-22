@@ -1,25 +1,27 @@
 <template>
   <div class="mx-auto max-w-md px-4 py-8">
-    <h1 class="text-2xl font-semibold mb-4">Ingresar</h1>
+    <div class="relative rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur">
+      <h1 class="text-2xl font-semibold mb-4">Ingresar</h1>
 
-    <form @submit.prevent="onSubmit" class="space-y-4">
-      <div>
-        <label class="block text-sm text-white/80 mb-1">Email</label>
-        <input v-model="email" type="email" required class="w-full rounded-md border px-3 py-2 bg-slate-900" />
-      </div>
+      <form @submit.prevent="onSubmit" class="space-y-4">
+        <div>
+          <label class="block text-sm text-white/80 mb-1">Email</label>
+          <input v-model="email" type="email" required class="h-11 w-full rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm" />
+        </div>
 
-      <div>
-        <label class="block text-sm text-white/80 mb-1">Contraseña</label>
-        <input v-model="password" type="password" required class="w-full rounded-md border px-3 py-2 bg-slate-900" />
-      </div>
+        <div>
+          <label class="block text-sm text-white/80 mb-1">Contraseña</label>
+          <input v-model="password" type="password" required class="h-11 w-full rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm" />
+        </div>
 
-      <div class="flex items-center justify-between">
-        <button class="rounded-md bg-cyan-500 px-4 py-2 text-sm font-semibold text-white">Ingresar</button>
-        <NuxtLink to="/register" class="text-sm text-cyan-200">Crear cuenta</NuxtLink>
-      </div>
+        <div class="flex items-center justify-between">
+          <button class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-white">Ingresar</button>
+          <NuxtLink to="/register" class="text-sm text-cyan-200">Crear cuenta</NuxtLink>
+        </div>
 
-      <div v-if="error" class="text-sm text-rose-400">{{ error }}</div>
-    </form>
+        <div v-if="error" class="text-sm text-rose-400">{{ error }}</div>
+      </form>
+    </div>
   </div>
 </template>
 
