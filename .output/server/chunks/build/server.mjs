@@ -385,12 +385,32 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-B4nnqaZn.mjs')
+    component: () => import('./index-D2OYwK_i.mjs')
+  },
+  {
+    name: "login",
+    path: "/login",
+    component: () => import('./login-D3mThyp3.mjs')
+  },
+  {
+    name: "tiendas",
+    path: "/tiendas",
+    component: () => import('./tiendas-B73Gnmzw.mjs')
+  },
+  {
+    name: "register",
+    path: "/register",
+    component: () => import('./register-BPVKBPPC.mjs')
   },
   {
     name: "slug",
     path: "/:slug(.*)*",
-    component: () => import('./_...slug_--GTaSfyj.mjs')
+    component: () => import('./_...slug_-uKgYw4xC.mjs')
+  },
+  {
+    name: "marketplace",
+    path: "/marketplace",
+    component: () => import('./marketplace-B7fkb7Uj.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -1146,7 +1166,7 @@ const plugins = [
   prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-d_gX7u5N.mjs').then((m) => m.default || m))
+  default: defineAsyncComponent(() => import('./default-DwSpjs7n.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -1406,7 +1426,7 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-DiQQlPp5.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-CEspcn4U.mjs'));
     const _Error = defineAsyncComponent(() => import('./error-500-Gq5r8UNK.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
@@ -1488,5 +1508,5 @@ let entry;
 }
 const entry_default = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, useRequestEvent as a, useRuntimeConfig as b, useRoute as c, defineStore as d, entry_default as default, useRouter as e, nuxtLinkDefaults as f, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
+export { _export_sfc as _, useRuntimeConfig as a, useRequestEvent as b, useRoute as c, defineStore as d, entry_default as default, useRouter as e, nuxtLinkDefaults as f, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
 //# sourceMappingURL=server.mjs.map

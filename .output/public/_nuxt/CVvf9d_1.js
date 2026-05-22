@@ -1,0 +1,1 @@
+const o=new Map,m=()=>({controlledGet:async(s,r,n={})=>{const e=Date.now(),u=n.minIntervalMs??0,a=n.backoffMs??0,t=o.get(s);if(t&&e-t.timestamp<Math.max(u,0)||t&&a>0&&e-t.timestamp<a)return t.value;const c=await $fetch(r);return o.set(s,{value:c,timestamp:e}),c}});export{m as u};

@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMarketplaceRequests } from '~/app/composables/useMarketplaceRequests'
+import { useMarketplaceRequests } from '~/composables/useMarketplaceRequests'
 
 const config = useRuntimeConfig()
 const { controlledGet } = useMarketplaceRequests()
