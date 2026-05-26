@@ -705,6 +705,7 @@ const config = useRuntimeConfig()
 
 const loading = ref(false)
 const error = ref('')
+const platformApiAvailable = ref(true)
 const stores = ref<StoreRow[]>([])
 const summary = reactive<Summary>({
   stores_total: 0,
@@ -828,8 +829,112 @@ const loadMarketplaceSellers = async () => {
     })
     marketplaceSellers.value = response?.results || []
   } catch (err: any) {
+    const status = Number(err?.response?.status || 0)
+    // Compat fallback: some backends do not expose platform sellers endpoint.
+    if (status === 404 || status === 405) {
+      marketplaceSellers.value = []
+      return
+    }
     error.value = err?.response?._data?.detail || 'No pudimos cargar perfiles marketplace.'
   }
+}
+
+const normalizeCollection = <T>(payload: any): T[] => {
+  if (Array.isArray(payload)) return payload as T[]
+  if (Array.isArray(payload?.results)) return payload.results as T[]
+  return []
+}
+
+const normalizeStoreRow = (store: any): StoreRow => ({
+  id: Number(store?.id || 0),
+  name: String(store?.name || 'Tienda'),
+  slug: String(store?.slug || ''),
+  store_type: String(store?.store_type || 'retail'),
+  is_active: Boolean(store?.is_active),
+  created_at: String(store?.created_at || ''),
+  created_by_username: store?.created_by_username || null,
+  contact_email: store?.contact_email || '',
+  phone: store?.phone || '',
+  whatsapp: store?.whatsapp || '',
+  revenue_total: Number(store?.revenue_total || 0),
+  orders_total: Number(store?.orders_total || 0),
+  completed_orders: Number(store?.completed_orders || 0),
+  reports_total: Number(store?.reports_total || 0),
+  reports_open: Number(store?.reports_open || 0),
+  address: store?.address || '',
+  description: store?.description || '',
+  about: store?.about || '',
+  delivery_fee_mode: store?.delivery_fee_mode || '',
+  cart_enabled: typeof store?.cart_enabled === 'boolean' ? store.cart_enabled : true,
+  social_instagram: store?.social_instagram || '',
+  social_facebook: store?.social_facebook || '',
+  social_tiktok: store?.social_tiktok || '',
+  social_youtube: store?.social_youtube || '',
+  creator: store?.creator || null,
+})
+
+const applyReportsIntoStores = (storeRows: StoreRow[], tickets: ReportTicket[]) => {
+  const totals = new Map<string, { total: number; open: number }>()
+  tickets.forEach((ticket) => {
+    const slug = String(ticket?.store_slug || '').trim()
+    if (!slug) return
+    const current = totals.get(slug) || { total: 0, open: 0 }
+    current.total += 1
+    if (ticket.status === 'open' || ticket.status === 'in_progress') current.open += 1
+    totals.set(slug, current)
+  })
+
+  return storeRows.map((store) => {
+    const report = totals.get(store.slug) || { total: 0, open: 0 }
+    return {
+      ...store,
+      reports_total: report.total,
+      reports_open: report.open,
+    }
+  })
+}
+
+const loadOverviewFallback = async () => {
+  const storesPayload = await $fetch<any>(`${config.public.apiBase}/stores/`, {
+    headers: authHeaders.value,
+    params: {
+      page: pagination.page,
+      page_size: pagination.page_size,
+      search: pagination.search,
+    },
+  })
+
+  const baseStores = normalizeCollection<any>(storesPayload).map(normalizeStoreRow)
+
+  reportTickets.value = await $fetch<ReportTicket[]>(`${config.public.apiBase}/support/tickets/`, {
+    headers: authHeaders.value,
+    params: { kind: 'report' },
+  })
+  ticketDraftStatus.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.status || 'open']))
+  ticketDraftResponse.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.response_message || '']))
+
+  const storesWithReports = applyReportsIntoStores(baseStores, reportTickets.value)
+
+  stores.value = storesWithReports
+  topStores.value = [...storesWithReports]
+    .sort((a, b) => Number(b.reports_total || 0) - Number(a.reports_total || 0))
+    .slice(0, 5)
+  reportedStores.value = storesWithReports.filter((store) => Number(store.reports_total || 0) > 0)
+
+  const total = Number(storesPayload?.count || storesWithReports.length)
+  const totalPages = Math.max(1, Number(storesPayload?.total_pages || Math.ceil(total / pagination.page_size)))
+  pagination.total = total
+  pagination.total_pages = totalPages
+  searchDraft.value = pagination.search || ''
+
+  summary.stores_total = total
+  summary.stores_active = storesWithReports.filter((store) => store.is_active).length
+  summary.stores_inactive = Math.max(0, total - summary.stores_active)
+  summary.reported_stores = reportedStores.value.length
+  summary.reports_total = reportTickets.value.length
+  summary.reports_open = reportTickets.value.filter((ticket) => ticket.status === 'open' || ticket.status === 'in_progress').length
+
+  await loadMarketplaceSellers()
 }
 
 const loadOverview = async (options?: {
@@ -869,6 +974,8 @@ const loadOverview = async (options?: {
       },
     })
 
+    platformApiAvailable.value = true
+
     stores.value = data?.stores || []
     topStores.value = data?.top_stores || []
     reportedStores.value = data?.reported_stores || []
@@ -885,6 +992,18 @@ const loadOverview = async (options?: {
 
     await loadMarketplaceSellers()
   } catch (err: any) {
+    const status = Number(err?.response?.status || 0)
+    if (status === 404 || status === 405) {
+      platformApiAvailable.value = false
+      try {
+        await loadOverviewFallback()
+        error.value = ''
+        return
+      } catch (fallbackErr: any) {
+        error.value = fallbackErr?.response?._data?.detail || 'No pudimos cargar el panel de administracion.'
+        return
+      }
+    }
     error.value = err?.response?._data?.detail || 'No pudimos cargar el panel de administracion.'
   } finally {
     loading.value = false
@@ -934,6 +1053,10 @@ const askModerationReason = (entityLabel: string, nextState: boolean) => {
 }
 
 const toggleStoreState = async (store: StoreRow) => {
+  if (!platformApiAvailable.value) {
+    error.value = 'Tu backend actual no expone moderacion de estado para tiendas desde este panel.'
+    return
+  }
   const nextState = !store.is_active
   const reason = askModerationReason(`la tienda ${store.slug}`, nextState)
   if (!reason) return
@@ -954,6 +1077,10 @@ const toggleStoreState = async (store: StoreRow) => {
 }
 
 const toggleMarketplaceSellerState = async (seller: MarketplaceSeller) => {
+  if (!platformApiAvailable.value) {
+    error.value = 'Tu backend actual no expone moderacion de perfiles marketplace desde este panel.'
+    return
+  }
   const nextState = !seller.is_active
   const reason = askModerationReason(`el perfil ${seller.username}`, nextState)
   if (!reason) return
