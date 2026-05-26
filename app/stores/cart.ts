@@ -1,38 +1,78 @@
 import { defineStore } from 'pinia'
 
-type CartContext = string
+export const useCartStore = defineStore('cart', {
+  state: () => ({
+    items: [] as any[],
+  }),
 
-export const useCartStore = defineStore('cart', () => {
-  const context = ref<CartContext>('marketplace')
-  const items = ref<Record<string, any>[]>([])
+  getters: {
+    totalItems: (state) =>
+      state.items.reduce((acc, item) => acc + item.quantity, 0),
 
-  const setContext = (value: CartContext) => {
-    context.value = value || 'marketplace'
-  }
+    totalPrice: (state) =>
+      state.items.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      ),
+  },
 
-  const addProduct = (product: Record<string, any>) => {
-    if (!product) return
+  actions: {
+    addProduct(product: any) {
+      const existing = this.items.find(
+        (item) => item.id === product.id
+      )
 
-    const productId = product.id ?? product.slug
-    if (productId === undefined || productId === null) return
+      if (existing) {
+        existing.quantity++
+      } else {
+        this.items.push({
+          id: product.id,
+          name: product.name,
+          price: Number(product.price),
+          image: product.images?.[0]?.image || null,
+          quantity: 1,
+        })
+      }
 
-    const existing = items.value.find((item) => (item.id ?? item.slug) === productId)
-    if (existing) {
-      existing.quantity = Number(existing.quantity || 1) + 1
-      return
-    }
+      this.saveToStorage()
+    },
 
-    items.value.push({
-      ...product,
-      quantity: 1,
-      context: context.value,
-    })
-  }
+    removeProduct(productId: number) {
+      this.items = this.items.filter(
+        (item) => item.id !== productId
+      )
+      this.saveToStorage()
+    },
 
-  return {
-    context,
-    items,
-    setContext,
-    addProduct,
-  }
+    updateQuantity(productId: number, qty: number) {
+      const item = this.items.find((i) => i.id === productId)
+      if (!item) return
+
+      item.quantity = qty <= 0 ? 1 : qty
+      this.saveToStorage()
+    },
+
+    clearCart() {
+      this.items = []
+      this.saveToStorage()
+    },
+
+    saveToStorage() {
+      if (process.client) {
+        localStorage.setItem(
+          'cart',
+          JSON.stringify(this.items)
+        )
+      }
+    },
+
+    loadFromStorage() {
+      if (process.client) {
+        const stored = localStorage.getItem('cart')
+        if (stored) {
+          this.items = JSON.parse(stored)
+        }
+      }
+    },
+  },
 })

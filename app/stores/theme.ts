@@ -1,54 +1,113 @@
 import { defineStore } from 'pinia'
 
-const DEFAULT_ACCENT = '#2563eb'
-const DEFAULT_GRADIENT_FROM = '#111827'
-const DEFAULT_GRADIENT_TO = '#0b2358'
+type ThemeValues = { accent: string; gradientFrom: string; gradientTo: string }
 
-export const useThemeStore = defineStore('theme', () => {
-  const accent = ref(DEFAULT_ACCENT)
-  const gradientFrom = ref(DEFAULT_GRADIENT_FROM)
-  const gradientTo = ref(DEFAULT_GRADIENT_TO)
+const STORAGE_KEY = 'theme-preferences-v1'
 
-  const loadFromStorage = () => {
-    if (!process.client) return
+export const useThemeStore = defineStore('theme', {
+  state: () => ({
+    baseAccent: '#2563eb',
+    baseGradientFrom: '#111827',
+    baseGradientTo: '#0b2358',
+    accent: '#2563eb',
+    gradientFrom: '#111827',
+    gradientTo: '#0b2358',
+    perStore: {} as Record<string, ThemeValues>,
+    hydrated: false,
+  }),
+  actions: {
+    loadFromStorage() {
+      if (!process.client || this.hydrated) return
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw)
+          this.baseAccent = parsed.accent || this.baseAccent
+          this.baseGradientFrom = parsed.gradientFrom || this.baseGradientFrom
+          this.baseGradientTo = parsed.gradientTo || this.baseGradientTo
+          this.accent = this.baseAccent
+          this.gradientFrom = this.baseGradientFrom
+          this.gradientTo = this.baseGradientTo
+          this.perStore = parsed.perStore || {}
+        } catch (error) {
+          console.warn('No se pudo leer el tema guardado', error)
+        }
+      }
+      this.hydrated = true
+      this.applyTheme()
+    },
 
-    const storedAccent = localStorage.getItem('pymeweb_theme_accent')
-    const storedFrom = localStorage.getItem('pymeweb_theme_gradient_from')
-    const storedTo = localStorage.getItem('pymeweb_theme_gradient_to')
+    saveToStorage() {
+      if (!process.client) return
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          accent: this.accent,
+          gradientFrom: this.gradientFrom,
+          gradientTo: this.gradientTo,
+          perStore: this.perStore,
+        })
+      )
+    },
 
-    if (storedAccent) accent.value = storedAccent
-    if (storedFrom) gradientFrom.value = storedFrom
-    if (storedTo) gradientTo.value = storedTo
-  }
+    resetToBase() {
+      this.accent = this.baseAccent
+      this.gradientFrom = this.baseGradientFrom
+      this.gradientTo = this.baseGradientTo
+      this.applyTheme()
+    },
 
-  const applyTheme = () => {
-    if (!process.client) return
+    setAccent(color: string) {
+      this.accent = color
+      this.applyTheme()
+      this.saveToStorage()
+    },
+    setGradient(from: string, to: string) {
+      this.gradientFrom = from
+      this.gradientTo = to
+      this.applyTheme()
+      this.saveToStorage()
+    },
 
-    const root = document.documentElement
-    root.style.setProperty('--theme-accent', accent.value)
-    root.style.setProperty('--theme-gradient-from', gradientFrom.value)
-    root.style.setProperty('--theme-gradient-to', gradientTo.value)
-  }
+    setStoreTheme(slug: string, values: Partial<ThemeValues>) {
+      if (!slug) return
+      const current = this.perStore[slug] || {
+        accent: this.accent,
+        gradientFrom: this.gradientFrom,
+        gradientTo: this.gradientTo,
+      }
+      this.perStore[slug] = {
+        accent: values.accent || current.accent,
+        gradientFrom: values.gradientFrom || current.gradientFrom,
+        gradientTo: values.gradientTo || current.gradientTo,
+      }
+      this.applyTheme(this.perStore[slug])
+      this.saveToStorage()
+    },
 
-  const setTheme = (nextTheme: Partial<{ accent: string; gradientFrom: string; gradientTo: string }>) => {
-    if (nextTheme.accent) accent.value = nextTheme.accent
-    if (nextTheme.gradientFrom) gradientFrom.value = nextTheme.gradientFrom
-    if (nextTheme.gradientTo) gradientTo.value = nextTheme.gradientTo
+    applyStoreTheme(slug: string) {
+      if (slug && this.perStore[slug]) {
+        const values = this.perStore[slug]
+        // Sincroniza el estado para que los bindings reactivos (botones, textos) usen el color del tema
+        this.accent = values.accent || this.accent
+        this.gradientFrom = values.gradientFrom || this.gradientFrom
+        this.gradientTo = values.gradientTo || this.gradientTo
+        this.applyTheme(values)
+        return
+      }
+      this.resetToBase()
+    },
 
-    if (process.client) {
-      localStorage.setItem('pymeweb_theme_accent', accent.value)
-      localStorage.setItem('pymeweb_theme_gradient_from', gradientFrom.value)
-      localStorage.setItem('pymeweb_theme_gradient_to', gradientTo.value)
-      applyTheme()
-    }
-  }
+    applyTheme(overrides?: ThemeValues) {
+      if (!process.client) return
+      const root = document.documentElement
+      const accent = overrides?.accent || this.accent
+      const from = overrides?.gradientFrom || this.gradientFrom
+      const to = overrides?.gradientTo || this.gradientTo
 
-  return {
-    accent,
-    gradientFrom,
-    gradientTo,
-    loadFromStorage,
-    applyTheme,
-    setTheme,
-  }
+      root.style.setProperty('--accent', accent)
+      root.style.setProperty('--gradient-from', from)
+      root.style.setProperty('--gradient-to', to)
+    },
+  },
 })
