@@ -1,12 +1,26 @@
-import { defineNuxtRouteMiddleware } from "nuxt/app"
+import { defineNuxtRouteMiddleware, navigateTo } from "nuxt/app"
 import { useTenantStore } from "~/stores/tenant"
-import type { Pinia } from 'pinia' // Importa el tipo
+import { useAuthStore } from '~/stores/auth'
+import { recordStoreVisit } from '~/composables/useStoreVisits'
 
-export default defineNuxtRouteMiddleware((to) => {
-  // Solo ejecutamos si hay slug y estamos en el cliente/servidor con contexto listo
-  const slug = to.params.slug as string
-  if (slug) {
-    const tenantStore = useTenantStore() 
-    tenantStore.setSlug(slug)
+export default defineNuxtRouteMiddleware(async (to) => {
+  const slug = to.params.slug as string | undefined
+  if (!slug) return
+
+  const tenantStore = useTenantStore()
+  const auth = useAuthStore()
+  tenantStore.setSlug(slug)
+
+  if (process.client) {
+    recordStoreVisit(slug, (auth.user as any)?.id)
+  }
+
+  // Si no hay tienda cargada o es otra, intentamos cargarla; si falla, redirigimos
+  if (!tenantStore.data || tenantStore.data.slug !== slug) {
+    try {
+      await tenantStore.fetchTienda()
+    } catch (error) {
+      return navigateTo('/')
+    }
   }
 })

@@ -1,16 +1,26 @@
 export const useImages = () => {
+  const FALLBACK_IMAGE = '/logoPW.png'
+
   /**
    * Retorna la imagen principal de un producto
    * - Usa Cloudinary (URL completa)
    * - Optimiza formato y calidad automáticamente
    */
   const getProductImage = (product: any): string => {
+    if (product?.image_url) {
+      return optimizeCloudinary(product.image_url)
+    }
+
+    if (product?.image) {
+      return optimizeCloudinary(product.image)
+    }
+
     if (product?.images?.length > 0) {
       return optimizeCloudinary(product.images[0].image)
     }
 
-    // Imagen por defecto si el producto no tiene imágenes
-    return "/img/placeholder-product.png"
+    // Imagen local por defecto para evitar dependencia de servicios externos.
+    return FALLBACK_IMAGE
   }
 
   /**

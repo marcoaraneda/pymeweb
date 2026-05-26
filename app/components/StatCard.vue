@@ -6,8 +6,9 @@
         <p class="text-xs uppercase tracking-[0.2em] text-white/60">{{ title }}</p>
         <p class="mt-2 text-3xl font-extrabold">{{ value }}</p>
       </div>
-      <div class="flex h-12 w-12 items-center justify-center rounded-xl text-lg text-white" :style="badgeStyle">
-        {{ icon }}
+      <div class="flex h-12 w-12 items-center justify-center rounded-xl text-white" :style="badgeStyle">
+        <component v-if="iconComponent" :is="iconComponent" class="h-5 w-5" aria-hidden="true" />
+        <span v-else class="text-lg">{{ iconText }}</span>
       </div>
     </div>
   </div>
@@ -15,10 +16,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { Component } from 'vue'
 
-const props = defineProps<{ title: string; value: number | string; icon: string; accent?: string }>()
+const props = defineProps<{ title: string; value: number | string; icon?: Component | string; accent?: string }>()
 
 const accent = computed(() => props.accent || '#2563eb')
 const badgeStyle = computed(() => ({ backgroundColor: accent.value }))
 const glowStyle = computed(() => ({ background: `radial-gradient(circle at 20% 20%, ${accent.value}26, transparent 55%)` }))
+const iconComponent = computed(() => (typeof props.icon === 'string' ? null : props.icon))
+const iconText = computed(() => (typeof props.icon === 'string' ? props.icon : ''))
 </script>

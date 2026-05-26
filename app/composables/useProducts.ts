@@ -10,9 +10,7 @@ export const useProducts = () => {
       throw new Error('Tenant slug no definido')
     }
 
-    return await $fetch(
-      `${config.public.apiBase}/store/${tenantStore.slug}/catalogo/products/`
-    )
+    return await $fetch(`${config.public.apiBase}/store/${tenantStore.slug}/catalogo/products/`)
   }
 
   const getProductBySlug = async (productSlug: string) => {

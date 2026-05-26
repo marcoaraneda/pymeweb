@@ -1,84 +1,80 @@
-type FavoriteKey = string
+import { computed, onMounted, watch } from 'vue'
+import { useState } from '#app'
 
-const STORE_FAVORITES_KEY = 'pymeweb_favorite_stores'
-const PRODUCT_FAVORITES_KEY = 'pymeweb_favorite_products'
+const STORE_STORAGE_KEY = 'pymeweb:favStores'
+const PRODUCT_STORAGE_KEY = 'pymeweb:favProducts'
 
-const readJsonSet = (key: string) => {
-  if (!process.client) return new Set<string>()
-
+const safeParseArray = (raw: string | null): string[] => {
+  if (!raw) return []
   try {
-    const raw = localStorage.getItem(key)
-    if (!raw) return new Set<string>()
     const parsed = JSON.parse(raw)
-    return new Set(Array.isArray(parsed) ? parsed.map(String) : [])
+    return Array.isArray(parsed) ? parsed.map(String) : []
   } catch {
-    return new Set<string>()
+    return []
   }
 }
 
-const writeJsonSet = (key: string, values: Set<string>) => {
-  if (!process.client) return
-  localStorage.setItem(key, JSON.stringify(Array.from(values)))
-}
+const uniq = (items: string[]) => Array.from(new Set(items.filter(Boolean)))
 
-export const makeProductFavoriteKey = (storeSlug: string | number | null | undefined, productId: string | number | null | undefined) => {
-  const storePart = String(storeSlug ?? '').trim()
-  const productPart = String(productId ?? '').trim()
-  return [storePart, productPart].filter(Boolean).join(':')
+export const makeProductFavoriteKey = (
+  storeSlug: string | null | undefined,
+  productIdOrSlug: string | number | null | undefined
+) => {
+  const store = (storeSlug || 'marketplace').toString()
+  const prod = productIdOrSlug === null || productIdOrSlug === undefined ? '' : String(productIdOrSlug)
+  return prod ? `${store}:${prod}` : ''
 }
 
 export const useFavorites = () => {
-  const storeFavorites = ref<Set<string>>(new Set())
-  const productFavorites = ref<Set<string>>(new Set())
+  const favoriteStoreSlugs = useState<string[]>('favoriteStoreSlugs', () => [])
+  const favoriteProductKeys = useState<string[]>('favoriteProductKeys', () => [])
 
-  const hydrate = () => {
+  const storeSet = computed(() => new Set(favoriteStoreSlugs.value))
+  const productSet = computed(() => new Set(favoriteProductKeys.value))
+
+  const loadFromStorage = () => {
     if (!process.client) return
-    storeFavorites.value = readJsonSet(STORE_FAVORITES_KEY)
-    productFavorites.value = readJsonSet(PRODUCT_FAVORITES_KEY)
+    if (!favoriteStoreSlugs.value.length) {
+      favoriteStoreSlugs.value = uniq(safeParseArray(localStorage.getItem(STORE_STORAGE_KEY)))
+    }
+    if (!favoriteProductKeys.value.length) {
+      favoriteProductKeys.value = uniq(safeParseArray(localStorage.getItem(PRODUCT_STORAGE_KEY)))
+    }
   }
 
   const persist = () => {
-    writeJsonSet(STORE_FAVORITES_KEY, storeFavorites.value)
-    writeJsonSet(PRODUCT_FAVORITES_KEY, productFavorites.value)
+    if (!process.client) return
+    localStorage.setItem(STORE_STORAGE_KEY, JSON.stringify(uniq(favoriteStoreSlugs.value)))
+    localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(uniq(favoriteProductKeys.value)))
   }
 
-  const isStoreFavorite = (storeSlug: string | number | null | undefined) =>
-    storeFavorites.value.has(String(storeSlug ?? '').trim())
+  onMounted(loadFromStorage)
+  watch([favoriteStoreSlugs, favoriteProductKeys], persist, { deep: true })
 
-  const toggleStoreFavorite = (storeSlug: string | number | null | undefined) => {
-    const key = String(storeSlug ?? '').trim()
-    if (!key) return false
-
-    if (storeFavorites.value.has(key)) {
-      storeFavorites.value.delete(key)
-    } else {
-      storeFavorites.value.add(key)
-    }
-    persist()
-    return storeFavorites.value.has(key)
+  const isStoreFavorite = (slug: string) => storeSet.value.has(slug)
+  const toggleStoreFavorite = (slug: string) => {
+    if (!slug) return
+    const next = new Set(favoriteStoreSlugs.value)
+    if (next.has(slug)) next.delete(slug)
+    else next.add(slug)
+    favoriteStoreSlugs.value = Array.from(next)
   }
 
-  const isProductFavoriteKey = (favoriteKey: FavoriteKey) => productFavorites.value.has(String(favoriteKey ?? '').trim())
-
-  const toggleProductFavoriteKey = (favoriteKey: FavoriteKey) => {
-    const key = String(favoriteKey ?? '').trim()
-    if (!key) return false
-
-    if (productFavorites.value.has(key)) {
-      productFavorites.value.delete(key)
-    } else {
-      productFavorites.value.add(key)
-    }
-    persist()
-    return productFavorites.value.has(key)
+  const isProductFavoriteKey = (key: string) => Boolean(key) && productSet.value.has(key)
+  const toggleProductFavoriteKey = (key: string) => {
+    if (!key) return
+    const next = new Set(favoriteProductKeys.value)
+    if (next.has(key)) next.delete(key)
+    else next.add(key)
+    favoriteProductKeys.value = Array.from(next)
   }
-
-  hydrate()
 
   return {
+    favoriteStoreSlugs,
+    favoriteProductKeys,
     isStoreFavorite,
-    isProductFavoriteKey,
     toggleStoreFavorite,
+    isProductFavoriteKey,
     toggleProductFavoriteKey,
   }
 }

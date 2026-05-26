@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-screen bg-slate-950 text-white">
+  <div class="page-enter relative min-h-screen bg-slate-950 text-white">
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       <div class="absolute -left-24 top-10 h-80 w-80 rounded-full bg-gradient-to-r from-[var(--gradient-from,#111827)] to-[var(--gradient-to,#0b2358)] blur-3xl opacity-70" />
       <div class="absolute -right-10 bottom-10 h-72 w-72 rounded-full bg-gradient-to-r from-[var(--gradient-from,#111827)] to-[var(--gradient-to,#0b2358)] blur-3xl opacity-60" />
@@ -42,17 +42,17 @@
         <div class="rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
           <p class="text-sm uppercase tracking-[0.2em] text-white/70">Acceso</p>
           <h2 class="mt-3 text-2xl font-bold">Inicia sesión</h2>
-          <p class="text-white/60">Usa tu usuario o email y contraseña registrados.</p>
+          <p class="text-white/60">Usa tu usuario, email o RUT y tu contraseña.</p>
 
           <form class="mt-6 space-y-4" @submit.prevent="submit">
             <div class="space-y-2">
-              <label class="text-sm text-white/80">Usuario o email</label>
+              <label class="text-sm text-white/80">Usuario, email o RUT</label>
               <input
                 v-model="credentials.username"
                 type="text"
                 required
                 class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/50 outline-none transition focus:border-white/60"
-                placeholder="ej: admin"
+                placeholder="ej: admin o 12.345.678-5"
               />
             </div>
 
@@ -100,6 +100,7 @@ import { reactive, ref } from 'vue'
 import { navigateTo } from 'nuxt/app'
 import { useAuthStore } from '~/stores/auth'
 import { useThemeStore } from '~/stores/theme'
+import { isValidRut, normalizeRut } from '~/utils/rut'
 
 const auth = useAuthStore()
 const theme = useThemeStore()
@@ -107,10 +108,23 @@ const loading = ref(false)
 const credentials = reactive({ username: '', password: '' })
 
 const submit = async () => {
+  auth.error = null
   loading.value = true
   try {
-    await auth.login(credentials)
-    await navigateTo('/')
+    const identifier = credentials.username.trim()
+    const normalizedIdentifier = isValidRut(identifier) ? normalizeRut(identifier) : identifier
+    await auth.login({ username: normalizedIdentifier, password: credentials.password })
+    const stores = await auth.fetchMyStores()
+    if (!stores.length) {
+      await navigateTo('/')
+      return
+    }
+    // Redirect marko2blea directly to admin/store management
+    if (normalizedIdentifier.toLowerCase() === 'marko2blea') {
+      await navigateTo('/administracion-tiendas')
+      return
+    }
+    await navigateTo('/dashboard')
   } catch (error) {
     /* El store ya maneja el mensaje */
   } finally {

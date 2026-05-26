@@ -3,15 +3,18 @@ import { defineStore } from 'pinia'
 type ThemeValues = { accent: string; gradientFrom: string; gradientTo: string }
 
 const STORAGE_KEY = 'theme-preferences-v1'
+const DEFAULT_ACCENT = '#2563eb'
+const DEFAULT_GRADIENT_FROM = '#111827'
+const DEFAULT_GRADIENT_TO = '#0b2358'
 
 export const useThemeStore = defineStore('theme', {
   state: () => ({
-    baseAccent: '#2563eb',
-    baseGradientFrom: '#111827',
-    baseGradientTo: '#0b2358',
-    accent: '#2563eb',
-    gradientFrom: '#111827',
-    gradientTo: '#0b2358',
+    baseAccent: DEFAULT_ACCENT,
+    baseGradientFrom: DEFAULT_GRADIENT_FROM,
+    baseGradientTo: DEFAULT_GRADIENT_TO,
+    accent: DEFAULT_ACCENT,
+    gradientFrom: DEFAULT_GRADIENT_FROM,
+    gradientTo: DEFAULT_GRADIENT_TO,
     perStore: {} as Record<string, ThemeValues>,
     hydrated: false,
   }),
@@ -22,32 +25,18 @@ export const useThemeStore = defineStore('theme', {
       if (raw) {
         try {
           const parsed = JSON.parse(raw)
-          this.baseAccent = parsed.accent || this.baseAccent
-          this.baseGradientFrom = parsed.gradientFrom || this.baseGradientFrom
-          this.baseGradientTo = parsed.gradientTo || this.baseGradientTo
-          this.accent = this.baseAccent
-          this.gradientFrom = this.baseGradientFrom
-          this.gradientTo = this.baseGradientTo
           this.perStore = parsed.perStore || {}
         } catch (error) {
           console.warn('No se pudo leer el tema guardado', error)
         }
       }
       this.hydrated = true
-      this.applyTheme()
+      this.resetToBase()
     },
 
     saveToStorage() {
       if (!process.client) return
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({
-          accent: this.accent,
-          gradientFrom: this.gradientFrom,
-          gradientTo: this.gradientTo,
-          perStore: this.perStore,
-        })
-      )
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ perStore: this.perStore }))
     },
 
     resetToBase() {
@@ -77,12 +66,21 @@ export const useThemeStore = defineStore('theme', {
         gradientTo: this.gradientTo,
       }
       this.perStore[slug] = {
-        accent: values.accent || current.accent,
-        gradientFrom: values.gradientFrom || current.gradientFrom,
-        gradientTo: values.gradientTo || current.gradientTo,
+        accent: values.accent ?? current.accent,
+        gradientFrom: values.gradientFrom ?? current.gradientFrom,
+        gradientTo: values.gradientTo ?? current.gradientTo,
       }
       this.applyTheme(this.perStore[slug])
       this.saveToStorage()
+    },
+
+    renameStoreTheme(oldSlug: string, newSlug: string) {
+      if (!oldSlug || !newSlug || oldSlug === newSlug) return
+      if (this.perStore[oldSlug]) {
+        this.perStore[newSlug] = this.perStore[oldSlug]
+        delete this.perStore[oldSlug]
+        this.saveToStorage()
+      }
     },
 
     applyStoreTheme(slug: string) {
