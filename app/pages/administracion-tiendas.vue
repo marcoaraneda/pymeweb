@@ -21,6 +21,10 @@
         {{ error }}
       </div>
 
+      <div v-if="!platformApiAvailable" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+        Modo compatibilidad activo: tu backend no expone endpoints platform de moderacion. El panel muestra datos disponibles y desactiva acciones no soportadas.
+      </div>
+
       <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
           <p class="text-xs uppercase tracking-[0.2em] text-white/60">Tiendas</p>
@@ -37,6 +41,25 @@
         <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
           <p class="text-xs uppercase tracking-[0.2em] text-white/60">Denuncias abiertas</p>
           <p class="mt-2 text-2xl font-bold text-rose-200">{{ summary.reports_open }}</p>
+        </article>
+      </section>
+
+      <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-white/60">Pedidos pendientes</p>
+          <p class="mt-2 text-2xl font-bold text-amber-200">{{ summary.pending_orders }}</p>
+        </article>
+        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-white/60">Pedidos nuevos (24h)</p>
+          <p class="mt-2 text-2xl font-bold text-sky-200">{{ summary.new_orders_24h }}</p>
+        </article>
+        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-white/60">Tickets actualizados (24h)</p>
+          <p class="mt-2 text-2xl font-bold text-indigo-200">{{ summary.tickets_updated_24h }}</p>
+        </article>
+        <article class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-white/60">Productos pendientes</p>
+          <p class="mt-2 text-2xl font-bold text-emerald-200">{{ summary.pending_products }}</p>
         </article>
       </section>
 
@@ -212,10 +235,10 @@
                 <td class="px-3 py-3">
                   <button
                     class="rounded-lg border border-white/20 px-2 py-1 text-xs hover:border-white/50 disabled:opacity-50"
-                    :disabled="Boolean(stateLoading[store.slug])"
+                    :disabled="!platformApiAvailable || Boolean(stateLoading[store.slug])"
                     @click="toggleStoreState(store)"
                   >
-                    {{ stateLoading[store.slug] ? 'Guardando...' : store.is_active ? 'Desactivar' : 'Activar' }}
+                    {{ !platformApiAvailable ? 'No disponible' : stateLoading[store.slug] ? 'Guardando...' : store.is_active ? 'Desactivar' : 'Activar' }}
                   </button>
                 </td>
               </tr>
@@ -283,10 +306,10 @@
                 <td class="px-3 py-3">
                   <button
                     class="rounded-lg border border-white/20 px-2 py-1 text-xs hover:border-white/50 disabled:opacity-50"
-                    :disabled="Boolean(sellerStateLoading[seller.id])"
+                    :disabled="!platformApiAvailable || Boolean(sellerStateLoading[seller.id])"
                     @click="toggleMarketplaceSellerState(seller)"
                   >
-                    {{ sellerStateLoading[seller.id] ? 'Guardando...' : seller.is_active ? 'Desactivar' : 'Activar' }}
+                    {{ !platformApiAvailable ? 'No disponible' : sellerStateLoading[seller.id] ? 'Guardando...' : seller.is_active ? 'Desactivar' : 'Activar' }}
                   </button>
                 </td>
               </tr>
@@ -656,6 +679,10 @@ type Summary = {
   reported_stores: number
   reports_total: number
   reports_open: number
+  pending_orders: number
+  new_orders_24h: number
+  tickets_updated_24h: number
+  pending_products: number
 }
 
 type Pagination = {
@@ -714,6 +741,10 @@ const summary = reactive<Summary>({
   reported_stores: 0,
   reports_total: 0,
   reports_open: 0,
+  pending_orders: 0,
+  new_orders_24h: 0,
+  tickets_updated_24h: 0,
+  pending_products: 0,
 })
 const pagination = reactive<Pagination>({
   page: 1,
@@ -873,6 +904,27 @@ const normalizeStoreRow = (store: any): StoreRow => ({
   creator: store?.creator || null,
 })
 
+const loadReportTicketsSafe = async () => {
+  try {
+    const tickets = await $fetch<ReportTicket[]>(`${config.public.apiBase}/support/tickets/`, {
+      headers: authHeaders.value,
+      params: { kind: 'report' },
+    })
+    reportTickets.value = tickets || []
+  } catch (err: any) {
+    const status = Number(err?.response?.status || 0)
+    if (status === 401 || status === 403 || status === 404) {
+      // Optional dataset: do not block panel rendering if support API is unavailable.
+      reportTickets.value = []
+      return
+    }
+    throw err
+  }
+
+  ticketDraftStatus.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.status || 'open']))
+  ticketDraftResponse.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.response_message || '']))
+}
+
 const applyReportsIntoStores = (storeRows: StoreRow[], tickets: ReportTicket[]) => {
   const totals = new Map<string, { total: number; open: number }>()
   tickets.forEach((ticket) => {
@@ -906,12 +958,11 @@ const loadOverviewFallback = async () => {
 
   const baseStores = normalizeCollection<any>(storesPayload).map(normalizeStoreRow)
 
-  reportTickets.value = await $fetch<ReportTicket[]>(`${config.public.apiBase}/support/tickets/`, {
+  await loadReportTicketsSafe()
+
+  const dashboardSummary = await $fetch<any>(`${config.public.apiBase}/support/dashboard/summary/`, {
     headers: authHeaders.value,
-    params: { kind: 'report' },
-  })
-  ticketDraftStatus.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.status || 'open']))
-  ticketDraftResponse.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.response_message || '']))
+  }).catch(() => null)
 
   const storesWithReports = applyReportsIntoStores(baseStores, reportTickets.value)
 
@@ -933,6 +984,10 @@ const loadOverviewFallback = async () => {
   summary.reported_stores = reportedStores.value.length
   summary.reports_total = reportTickets.value.length
   summary.reports_open = reportTickets.value.filter((ticket) => ticket.status === 'open' || ticket.status === 'in_progress').length
+  summary.pending_orders = Number(dashboardSummary?.pending_orders || 0)
+  summary.new_orders_24h = Number(dashboardSummary?.new_orders_24h || 0)
+  summary.tickets_updated_24h = Number(dashboardSummary?.tickets_updated_24h || 0)
+  summary.pending_products = Number(dashboardSummary?.pending_products || 0)
 
   await loadMarketplaceSellers()
 }
@@ -983,12 +1038,7 @@ const loadOverview = async (options?: {
     Object.assign(pagination, data?.pagination || {})
     searchDraft.value = pagination.search || ''
 
-    reportTickets.value = await $fetch<ReportTicket[]>(`${config.public.apiBase}/support/tickets/`, {
-      headers: authHeaders.value,
-      params: { kind: 'report' },
-    })
-    ticketDraftStatus.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.status || 'open']))
-    ticketDraftResponse.value = Object.fromEntries(reportTickets.value.map((ticket) => [ticket.id, ticket.response_message || '']))
+    await loadReportTicketsSafe()
 
     await loadMarketplaceSellers()
   } catch (err: any) {
