@@ -102,6 +102,11 @@ export const useAuthStore = defineStore('auth', {
       const refreshCookie = useCookie<string | null>('refresh_token', { secure, path: '/' })
       this.token = tokenCookie.value || null
       this.refreshToken = refreshCookie.value || null
+      try {
+        console.debug('[auth] restoreFromCookies token present:', Boolean(this.token), 'refresh present:', Boolean(this.refreshToken))
+      } catch (e) {
+        /* ignore */
+      }
     },
 
     async initializeSession(options?: { forceProfile?: boolean }): Promise<UserProfile | null> {
@@ -110,6 +115,7 @@ export const useAuthStore = defineStore('auth', {
       }
 
       sessionBootstrapPromise = (async () => {
+        console.debug('[auth] initializeSession start', { hasToken: Boolean(this.token), hasRefresh: Boolean(this.refreshToken), forceProfile: options?.forceProfile })
         if (!this.token || !this.refreshToken) {
           this.restoreFromCookies()
         }
@@ -135,6 +141,7 @@ export const useAuthStore = defineStore('auth', {
       } finally {
         this.initialized = true
         sessionBootstrapPromise = null
+        console.debug('[auth] initializeSession finished, initialized flag set')
       }
     },
 
@@ -151,6 +158,7 @@ export const useAuthStore = defineStore('auth', {
 
         this.token = data.access
         this.refreshToken = data.refresh
+        console.debug('[auth] login success, stored access and refresh tokens')
 
         const secure = process.env.NODE_ENV === 'production'
         useCookie('auth_token', { maxAge: 60 * 60 * 24, sameSite: 'lax', secure, path: '/' }).value = data.access
@@ -160,6 +168,7 @@ export const useAuthStore = defineStore('auth', {
       } catch (error: any) {
         const detail = error?.response?._data?.detail || 'No pudimos iniciar sesión'
         this.error = detail
+        console.debug('[auth] login error', { detail })
         throw new Error(detail)
       } finally {
         this.loading = false
@@ -217,6 +226,9 @@ export const useAuthStore = defineStore('auth', {
           })
           this.profileBackoffUntil = 0
           this.user = profile
+          try {
+            console.debug('[auth] fetchProfile success', { userId: profile?.id, username: profile?.username })
+          } catch (e) {}
           return profile
         } catch (error: any) {
           if (error?.response?.status === 429) {
@@ -226,6 +238,9 @@ export const useAuthStore = defineStore('auth', {
           }
 
           const code = error?.response?._data?.code
+          try {
+            console.debug('[auth] fetchProfile error code', { code, status: error?.response?.status, detail: error?.response?._data?.detail })
+          } catch (e) {}
           if (code === 'token_not_valid' && this.refreshToken) {
             const refreshed = await this.refreshTokens()
             if (refreshed) {
@@ -235,6 +250,7 @@ export const useAuthStore = defineStore('auth', {
                 })
                 this.profileBackoffUntil = 0
                 this.user = profile
+                try { console.debug('[auth] fetchProfile success after refresh') } catch (e) {}
                 return profile
               } catch {
                 // Fall through to generic error.
@@ -243,6 +259,7 @@ export const useAuthStore = defineStore('auth', {
           }
           const detail = error?.response?._data?.detail || 'No pudimos cargar tu perfil'
           this.error = detail
+          try { console.debug('[auth] fetchProfile final error detail', { detail }) } catch (e) {}
           return null
         } finally {
           profileFetchPromise = null
@@ -258,6 +275,7 @@ export const useAuthStore = defineStore('auth', {
       }
       if (!this.refreshToken) return null
       const config = useRuntimeConfig()
+      console.debug('[auth] refreshTokens starting, hasRefresh:', Boolean(this.refreshToken))
       try {
         const data = await $fetch<{ access: string }>(`${config.public.apiBase}/token/refresh/`, {
           method: 'POST',
@@ -267,8 +285,10 @@ export const useAuthStore = defineStore('auth', {
         this.token = data.access
         const secure = process.env.NODE_ENV === 'production'
         useCookie('auth_token', { maxAge: 60 * 60 * 24, sameSite: 'lax', secure, path: '/' }).value = data.access
+        console.debug('[auth] refreshTokens success, new access stored')
         return data.access
       } catch (error) {
+        try { console.debug('[auth] refreshTokens failed, logging out', { error: String(error) }) } catch (e) {}
         this.logout()
         return null
       }

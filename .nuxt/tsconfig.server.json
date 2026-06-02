@@ -53,9 +53,6 @@
       "@unhead/vue": [
         "../node_modules/@unhead/vue"
       ],
-      "@nuxt/devtools": [
-        "../node_modules/@nuxt/devtools"
-      ],
       "@vue/runtime-core": [
         "../node_modules/@vue/runtime-core"
       ],
@@ -89,8 +86,17 @@
       "#internal/nuxt/paths": [
         "../node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
       ],
+      "pinia": [
+        "../node_modules/pinia/dist/pinia"
+      ],
       "#unhead/composables": [
         "../node_modules/nuxt/dist/head/runtime/composables"
+      ],
+      "#tailwindcss": [
+        "../app/assets/css/global"
+      ],
+      "#tailwindcss/sources": [
+        "./tailwindcss/sources"
       ]
     },
     "lib": [

@@ -25,9 +25,6 @@
       "@unhead/vue": [
         "../node_modules/@unhead/vue"
       ],
-      "@nuxt/devtools": [
-        "../node_modules/@nuxt/devtools"
-      ],
       "@vue/runtime-core": [
         "../node_modules/@vue/runtime-core"
       ],
@@ -85,6 +82,9 @@
       "vue-demi": [
         "../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
+      "pinia": [
+        "../node_modules/pinia/dist/pinia"
+      ],
       "#vue-router": [
         "../node_modules/vue-router"
       ],
@@ -93,6 +93,12 @@
       ],
       "#imports": [
         "./imports"
+      ],
+      "#tailwindcss": [
+        "../app/assets/css/global"
+      ],
+      "#tailwindcss/sources": [
+        "./tailwindcss/sources"
       ],
       "#app-manifest": [
         "./manifest/meta/dev"

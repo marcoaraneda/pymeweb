@@ -47,4 +47,5 @@ export { useNotificationStore, NotificationFeedItem } from '../app/stores/notifi
 export { useTenantStore } from '../app/stores/tenant';
 export { useThemeStore } from '../app/stores/theme';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
+export { autocompleteUtil as tw } from '../node_modules/@nuxtjs/tailwindcss/dist/runtime/utils';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

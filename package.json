@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "predev": "node scripts/clean-dev-public.js",
     "dev": "nuxt dev",
     "build": "nuxt build --preload",
     "generate": "nuxi generate",

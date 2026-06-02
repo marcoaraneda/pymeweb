@@ -635,6 +635,9 @@ const _inlineRuntimeConfig = {
       "/__nuxt_error": {
         "cache": false
       },
+      "/": {
+        "prerender": true
+      },
       "/_nuxt/builds/meta/**": {
         "headers": {
           "cache-control": "public, max-age=31536000, immutable"
@@ -648,10 +651,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://localhost:8000/api",
-    "cloudinaryCloudName": "dvjttkbbl",
-    "cloudinaryUploadPreset": "pymeweb",
-    "cloudinaryUploadUrl": "https://api.cloudinary.com/v1_1/dvjttkbbl/upload",
+    "apiBase": "http://127.0.0.1:8000/api",
+    "cloudinaryCloudName": "",
+    "cloudinaryUploadPreset": "",
+    "cloudinaryUploadUrl": "",
     "googleClientId": ""
   }
 };
@@ -1365,7 +1368,7 @@ const _dd3d3O1JIvw58Ddn0yrIQNZLWywojWPX5f62XUG5Jw = (function(nitro) {
 
 const rootDir = "C:/Users/marco/OneDrive/Escritorio/WEBPYME/pymeweb-frontend";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"},{"name":"description","content":"Plataforma integral de gestión"},{"name":"referrer","content":"no-referrer"},{"http-equiv":"Content-Security-Policy","content":"default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://accounts.google.com; worker-src 'self' blob:; connect-src 'self' http://localhost:8000/api http://localhost:8000 http://127.0.0.1:8000 http://192.168.18.61:8000 ws://localhost:* ws://127.0.0.1:* ws://192.168.18.61:* https://api.cloudinary.com https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com"},{"http-equiv":"Permissions-Policy","content":"camera=(), microphone=(), geolocation=(), payment=()"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Pymeweb - Gestión Digital para PYMEs"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"},{"name":"description","content":"Plataforma integral de gestión"},{"name":"referrer","content":"no-referrer"},{"http-equiv":"Content-Security-Policy","content":"default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://accounts.google.com; worker-src 'self' blob:; connect-src 'self' http://127.0.0.1:8000 http://localhost:8000 http://192.168.18.61:8000 https://pymeweb-api.onrender.com ws://localhost:* ws://127.0.0.1:* ws://192.168.18.61:* https://api.cloudinary.com https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com"},{"http-equiv":"Permissions-Policy","content":"camera=(), microphone=(), geolocation=(), payment=()"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Pymeweb - Gestión Digital para PYMEs"};
 
 const appRootTag = "div";
 

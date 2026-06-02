@@ -1,7 +1,7 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, getCurrentInstance, ref, reactive, effectScope, isRef, isReactive, toRaw, getCurrentScope, onScopeDispose, watch, nextTick, toRefs, markRaw, computed, defineComponent, createElementBlock, shallowRef, provide, cloneVNode, h, defineAsyncComponent, unref, shallowReactive, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, isReadonly, isShallow, mergeProps, withCtx, useSSRContext } from 'vue';
-import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, n as sanitizeStatusCode, o as getContext, $ as $fetch, p as createHooks, q as executeAsync, h as createError$1, r as toRouteMatcher, v as createRouter$1, x as defu } from '../_/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { defineComponent, shallowRef, getCurrentInstance, provide, cloneVNode, h, createElementBlock, ref, inject, Suspense, hasInjectionContext, shallowReactive, Fragment, reactive, effectScope, isRef, isReactive, toRaw, getCurrentScope, onScopeDispose, watch, nextTick, toRefs, markRaw, computed, defineAsyncComponent, unref, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, isReadonly, isShallow, mergeProps, withCtx, useSSRContext } from 'vue';
+import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, n as sanitizeStatusCode, o as getContext, $ as $fetch$1, d as destr, p as klona, q as createHooks, r as executeAsync, h as createError$1, v as parse, x as getRequestHeader, y as isEqual, z as toRouteMatcher, A as createRouter$1, B as defu, C as setCookie, D as getCookie, E as deleteCookie } from '../_/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
-import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
+import { RouterView, useRoute as useRoute$1, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { ssrRenderSuspense, ssrRenderComponent, ssrRenderVNode } from 'vue/server-renderer';
 import 'node:http';
 import 'node:https';
@@ -17,7 +17,7 @@ import 'devalue';
 import 'unhead/utils';
 
 if (!globalThis.$fetch) {
-  globalThis.$fetch = $fetch.create({
+  globalThis.$fetch = $fetch$1.create({
     baseURL: baseURL()
   });
 }
@@ -381,36 +381,301 @@ async function getRouteRules(arg) {
     return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
   }
 }
+const __nuxt_page_meta$s = { requiresAuth: true };
+const __nuxt_page_meta$r = { requiresAuth: true, ssr: false };
+const __nuxt_page_meta$q = { requiresAuth: true, ssr: false };
+const __nuxt_page_meta$p = { requiresAuth: true, ssr: false };
+const __nuxt_page_meta$o = { requiresAuth: true, ssr: false };
+const __nuxt_page_meta$n = { requiresAuth: true };
+const __nuxt_page_meta$m = { layout: "default" };
+const __nuxt_page_meta$l = { layout: "default" };
+const __nuxt_page_meta$k = { requiresAuth: true };
+const __nuxt_page_meta$j = { layout: "store" };
+const __nuxt_page_meta$i = { layout: "store" };
+const __nuxt_page_meta$h = { layout: "store" };
+const __nuxt_page_meta$g = { requiresAuth: true, ssr: false };
+const __nuxt_page_meta$f = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$e = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$d = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$c = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$b = { layout: "store" };
+const __nuxt_page_meta$a = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$9 = { layout: "store" };
+const __nuxt_page_meta$8 = { layout: "store", requiresAuth: true };
+const __nuxt_page_meta$7 = { layout: "store" };
+const __nuxt_page_meta$6 = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$5 = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$4 = { layout: "admin", requiresAuth: true };
+const __nuxt_page_meta$3 = {
+  layout: "store",
+  requiresAuth: true
+};
+const __nuxt_page_meta$2 = { layout: "store", requiresAuth: true };
+const __nuxt_page_meta$1 = { layout: "store" };
+const __nuxt_page_meta = { layout: "store", requiresAuth: true };
 const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-D2OYwK_i.mjs')
+    component: () => import('./index-BasCsXRp.mjs')
   },
   {
     name: "login",
     path: "/login",
-    component: () => import('./login-D3mThyp3.mjs')
+    component: () => import('./login-CKVblLK1.mjs')
+  },
+  {
+    name: "profile",
+    path: "/profile",
+    meta: { ...__nuxt_page_meta$s || {}, ...{ "middleware": ["auth"] } },
+    component: () => import('./profile-CM9wNrkb.mjs')
   },
   {
     name: "tiendas",
     path: "/tiendas",
-    component: () => import('./tiendas-B73Gnmzw.mjs')
+    component: () => import('./tiendas-K76393fU.mjs')
   },
   {
     name: "register",
     path: "/register",
-    component: () => import('./register-BPVKBPPC.mjs')
+    component: () => import('./register-DE1vWKsv.mjs')
   },
   {
-    name: "slug",
-    path: "/:slug(.*)*",
-    component: () => import('./_...slug_-uKgYw4xC.mjs')
+    name: "dashboard",
+    path: "/dashboard",
+    meta: { ...__nuxt_page_meta$o || {}, ...{ "middleware": ["auth"] } },
+    component: () => import('./dashboard-CpnXbQ5R.mjs'),
+    children: [
+      {
+        name: "dashboard-tickets",
+        path: "tickets",
+        component: () => import('./tickets-C8ADtyeC.mjs')
+      },
+      {
+        name: "dashboard-analisis",
+        path: "analisis",
+        meta: { ...__nuxt_page_meta$r || {}, ...{ "middleware": ["auth"] } },
+        component: () => import('./analisis-BJjWGn1v.mjs')
+      },
+      {
+        name: "dashboard-recursos-humanos",
+        path: "recursos-humanos",
+        meta: { ...__nuxt_page_meta$q || {}, ...{ "middleware": ["auth"] } },
+        component: () => import('./recursos-humanos-BZS4deAj.mjs')
+      },
+      {
+        name: "dashboard-analisis-financiero",
+        path: "analisis-financiero",
+        meta: { ...__nuxt_page_meta$p || {}, ...{ "middleware": ["auth"] } },
+        component: () => import('./analisis-financiero-WS7TOmh_.mjs')
+      }
+    ]
   },
   {
     name: "marketplace",
     path: "/marketplace",
-    component: () => import('./marketplace-B7fkb7Uj.mjs')
+    component: () => import('./marketplace-nyQvQvtU.mjs'),
+    children: [
+      {
+        name: "marketplace-orden",
+        path: "orden",
+        component: () => import('./orden-BU2V4Ap1.mjs')
+      },
+      {
+        name: "marketplace-carrito",
+        path: "carrito",
+        component: () => import('./index-CNhFjjLq.mjs')
+      },
+      {
+        name: "marketplace-mis-productos",
+        path: "mis-productos",
+        meta: { ...__nuxt_page_meta$n || {}, ...{ "middleware": ["auth"] } },
+        component: () => import('./mis-productos-C587PReF.mjs')
+      },
+      {
+        name: "marketplace-vendedores-id",
+        path: "vendedores/:id()",
+        component: () => import('./_id_-3b6oozqn.mjs')
+      },
+      {
+        name: "marketplace-productos-slug",
+        path: "productos/:slug()",
+        meta: __nuxt_page_meta$m || {},
+        component: () => import('./_slug_-Bixl68Tf.mjs')
+      }
+    ]
+  },
+  {
+    name: "seguimiento",
+    path: "/seguimiento",
+    component: () => import('./seguimiento-CSAup0HW.mjs')
+  },
+  {
+    name: "store",
+    path: "/store",
+    meta: __nuxt_page_meta$l || {},
+    component: () => import('./index-chRsifcK.mjs')
+  },
+  {
+    name: "notificaciones",
+    path: "/notificaciones",
+    meta: { ...__nuxt_page_meta$k || {}, ...{ "middleware": ["auth"] } },
+    component: () => import('./notificaciones-CbZMVRla.mjs')
+  },
+  {
+    name: "store-slug",
+    path: "/store/:slug()",
+    meta: { ...__nuxt_page_meta$j || {}, ...{ "middleware": ["tenant"] } },
+    component: () => import('./index-D6VsvBaH.mjs')
+  },
+  {
+    name: "store-slug-orden",
+    path: "/store/:slug()/orden",
+    component: () => import('./orden-D7hXoO7S.mjs')
+  },
+  {
+    name: "store-slug-acerca",
+    path: "/store/:slug()/acerca",
+    meta: __nuxt_page_meta$i || {},
+    component: () => import('./acerca-Cw1MywkI.mjs')
+  },
+  {
+    name: "store-slug-soporte",
+    path: "/store/:slug()/soporte",
+    meta: __nuxt_page_meta$h || {},
+    component: () => import('./soporte-B_X8Uyxo.mjs')
+  },
+  {
+    name: "store-slug-producto",
+    path: "/store/:slug()/producto",
+    component: () => import('./producto-BDZNfKeY.mjs')
+  },
+  {
+    name: "administracion-tiendas",
+    path: "/administracion-tiendas",
+    meta: { ...__nuxt_page_meta$g || {}, ...{ "middleware": ["auth"] } },
+    component: () => import('./administracion-tiendas-C_FSonwz.mjs')
+  },
+  {
+    name: "store-slug-admin-cms",
+    path: "/store/:slug()/admin/cms",
+    meta: { ...__nuxt_page_meta$f || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./cms-DTIkSd8C.mjs')
+  },
+  {
+    name: "store-slug-admin-faq",
+    path: "/store/:slug()/admin/faq",
+    meta: { ...__nuxt_page_meta$e || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./faq-BH3ljdQp.mjs')
+  },
+  {
+    name: "store-slug-admin",
+    path: "/store/:slug()/admin",
+    component: () => import('./index-v1kz1_B7.mjs')
+  },
+  {
+    name: "store-slug-admin-login",
+    path: "/store/:slug()/admin/login",
+    component: () => import('./login-u_UM9fjc.mjs')
+  },
+  {
+    name: "store-slug-admin-pagos",
+    path: "/store/:slug()/admin/pagos",
+    meta: { ...__nuxt_page_meta$d || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./pagos-CTG4C0LY.mjs')
+  },
+  {
+    name: "store-slug-success-id",
+    path: "/store/:slug()/success/:id()",
+    component: () => import('./_id_-Do4KnJBB.mjs')
+  },
+  {
+    name: "store-slug-admin-resenas",
+    path: "/store/:slug()/admin/resenas",
+    meta: { ...__nuxt_page_meta$c || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./resenas-DcshP_vS.mjs')
+  },
+  {
+    name: "store-slug-carrito",
+    path: "/store/:slug()/carrito",
+    meta: __nuxt_page_meta$b || {},
+    component: () => import('./index-BVn7wMtp.mjs')
+  },
+  {
+    name: "store-slug-success",
+    path: "/store/:slug()/success",
+    component: () => import('./index-BvaEQoHz.mjs')
+  },
+  {
+    name: "store-slug-admin-reportes",
+    path: "/store/:slug()/admin/reportes",
+    meta: { ...__nuxt_page_meta$a || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./reportes-8TKa-9Qc.mjs')
+  },
+  {
+    name: "store-slug-checkout",
+    path: "/store/:slug()/checkout",
+    meta: __nuxt_page_meta$9 || {},
+    component: () => import('./index-BPJJ4kYo.mjs')
+  },
+  {
+    name: "store-slug-productos-crear",
+    path: "/store/:slug()/productos/crear",
+    meta: { ...__nuxt_page_meta$8 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./crear-BsEx1AQo.mjs')
+  },
+  {
+    name: "store-slug-productos",
+    path: "/store/:slug()/productos",
+    meta: __nuxt_page_meta$7 || {},
+    component: () => import('./index-B9PwlA5B.mjs')
+  },
+  {
+    name: "store-slug-admin-inventario",
+    path: "/store/:slug()/admin/inventario",
+    meta: { ...__nuxt_page_meta$6 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./inventario-DnEV8nt3.mjs')
+  },
+  {
+    name: "store-slug-admin-orders-id",
+    path: "/store/:slug()/admin/orders/:id()",
+    meta: { ...__nuxt_page_meta$5 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./_id_-FUaixVZ3.mjs')
+  },
+  {
+    name: "store-slug-admin-orders",
+    path: "/store/:slug()/admin/orders",
+    meta: { ...__nuxt_page_meta$4 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./index-DlXuvXIk.mjs')
+  },
+  {
+    name: "store-slug-admin-settings",
+    path: "/store/:slug()/admin/settings",
+    meta: { ...__nuxt_page_meta$3 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./index-ByxhZdge.mjs')
+  },
+  {
+    name: "store-slug-admin-productos",
+    path: "/store/:slug()/admin/productos",
+    component: () => import('./index-C5vCNh2G.mjs')
+  },
+  {
+    name: "store-slug-admin-productos-nuevo",
+    path: "/store/:slug()/admin/productos/nuevo",
+    meta: { ...__nuxt_page_meta$2 || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./nuevo-DUc3N0CJ.mjs')
+  },
+  {
+    name: "store-slug-productos-product_slug",
+    path: "/store/:slug()/productos/:product_slug()",
+    meta: __nuxt_page_meta$1 || {},
+    component: () => import('./_product_slug_-BAsZZ5rm.mjs')
+  },
+  {
+    name: "store-slug-admin-productos-product_slug-editar",
+    path: "/store/:slug()/admin/productos/:product_slug()/editar",
+    meta: { ...__nuxt_page_meta || {}, ...{ "middleware": ["tenant", "auth"] } },
+    component: () => import('./editar-uKoKV-Tb.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -521,233 +786,109 @@ const validate = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to, from) => {
   });
   return error;
 });
-const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
+const __nuxt_component_1$1 = defineComponent({
+  name: "ServerPlaceholder",
+  render() {
+    return createElementBlock("div");
+  }
+});
+const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
+const __nuxt_component_1 = defineComponent({
+  name: "ClientOnly",
+  inheritAttrs: false,
+  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
+  ...false,
+  setup(props, { slots, attrs }) {
+    const mounted = shallowRef(false);
+    const vm = getCurrentInstance();
+    if (vm) {
+      vm._nuxtClientOnly = true;
+    }
+    provide(clientOnlySymbol, true);
+    return () => {
+      if (mounted.value) {
+        const vnodes = slots.default?.();
+        if (vnodes && vnodes.length === 1) {
+          return [cloneVNode(vnodes[0], attrs)];
+        }
+        return vnodes;
+      }
+      const slot = slots.fallback || slots.placeholder;
+      if (slot) {
+        return h(slot);
+      }
+      const fallbackStr = props.fallback || props.placeholder || "";
+      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
+      return createElementBlock(fallbackTag, attrs, fallbackStr);
+    };
+  }
+});
+function useRequestEvent(nuxtApp) {
+  nuxtApp ||= useNuxtApp();
+  return nuxtApp.ssrContext?.event;
+}
+const CookieDefaults = {
+  path: "/",
+  watch: true,
+  decode: (val) => destr(decodeURIComponent(val)),
+  encode: (val) => encodeURIComponent(typeof val === "string" ? val : JSON.stringify(val))
+};
+function useCookie(name, _opts) {
+  const opts = { ...CookieDefaults, ..._opts };
+  opts.filter ??= (key) => key === name;
+  const cookies = readRawCookies(opts) || {};
+  let delay;
+  if (opts.maxAge !== void 0) {
+    delay = opts.maxAge * 1e3;
+  } else if (opts.expires) {
+    delay = opts.expires.getTime() - Date.now();
+  }
+  const hasExpired = delay !== void 0 && delay <= 0;
+  const cookieValue = klona(hasExpired ? void 0 : cookies[name] ?? opts.default?.());
+  const cookie = ref(cookieValue);
   {
-    return;
-  }
-});
-const globalMiddleware = [
-  validate,
-  manifest_45route_45rule
-];
-const namedMiddleware = {};
-const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
-  name: "nuxt:router",
-  enforce: "pre",
-  async setup(nuxtApp) {
-    let __temp, __restore;
-    let routerBase = (/* @__PURE__ */ useRuntimeConfig()).app.baseURL;
-    const history = routerOptions.history?.(routerBase) ?? createMemoryHistory(routerBase);
-    const routes2 = routerOptions.routes ? ([__temp, __restore] = executeAsync(() => routerOptions.routes(_routes)), __temp = await __temp, __restore(), __temp) ?? _routes : _routes;
-    let startPosition;
-    const router = createRouter({
-      ...routerOptions,
-      scrollBehavior: (to, from, savedPosition) => {
-        if (from === START_LOCATION) {
-          startPosition = savedPosition;
+    const nuxtApp = useNuxtApp();
+    const writeFinalCookieValue = () => {
+      if (opts.readonly || isEqual(cookie.value, cookies[name])) {
+        return;
+      }
+      nuxtApp._cookies ||= {};
+      if (name in nuxtApp._cookies) {
+        if (isEqual(cookie.value, nuxtApp._cookies[name])) {
           return;
         }
-        if (routerOptions.scrollBehavior) {
-          router.options.scrollBehavior = routerOptions.scrollBehavior;
-          if ("scrollRestoration" in (void 0).history) {
-            const unsub = router.beforeEach(() => {
-              unsub();
-              (void 0).history.scrollRestoration = "manual";
-            });
-          }
-          return routerOptions.scrollBehavior(to, START_LOCATION, startPosition || savedPosition);
-        }
-      },
-      history,
-      routes: routes2
-    });
-    nuxtApp.vueApp.use(router);
-    const previousRoute = shallowRef(router.currentRoute.value);
-    router.afterEach((_to, from) => {
-      previousRoute.value = from;
-    });
-    Object.defineProperty(nuxtApp.vueApp.config.globalProperties, "previousRoute", {
-      get: () => previousRoute.value
-    });
-    const initialURL = nuxtApp.ssrContext.url;
-    const _route = shallowRef(router.currentRoute.value);
-    const syncCurrentRoute = () => {
-      _route.value = router.currentRoute.value;
+      }
+      nuxtApp._cookies[name] = cookie.value;
+      writeServerCookie(useRequestEvent(nuxtApp), name, cookie.value, opts);
     };
-    router.afterEach((to, from) => {
-      if (to.matched.at(-1)?.components?.default === from.matched.at(-1)?.components?.default) {
-        syncCurrentRoute();
-      }
+    const unhook = nuxtApp.hooks.hookOnce("app:rendered", writeFinalCookieValue);
+    nuxtApp.hooks.hookOnce("app:error", () => {
+      unhook();
+      return writeFinalCookieValue();
     });
-    const route = { sync: syncCurrentRoute };
-    for (const key in _route.value) {
-      Object.defineProperty(route, key, {
-        get: () => _route.value[key],
-        enumerable: true
-      });
-    }
-    nuxtApp._route = shallowReactive(route);
-    nuxtApp._middleware ||= {
-      global: [],
-      named: {}
-    };
-    if (!nuxtApp.ssrContext?.islandContext) {
-      router.afterEach(async (to, _from, failure) => {
-        delete nuxtApp._processingMiddleware;
-        if (failure) {
-          await nuxtApp.callHook("page:loading:end");
-        }
-        if (failure?.type === 4) {
-          return;
-        }
-        if (to.redirectedFrom && to.fullPath !== initialURL) {
-          await nuxtApp.runWithContext(() => navigateTo(to.fullPath || "/"));
-        }
-      });
-    }
-    try {
-      if (true) {
-        ;
-        [__temp, __restore] = executeAsync(() => router.push(initialURL)), await __temp, __restore();
-        ;
-      }
-      ;
-      [__temp, __restore] = executeAsync(() => router.isReady()), await __temp, __restore();
-      ;
-    } catch (error2) {
-      [__temp, __restore] = executeAsync(() => nuxtApp.runWithContext(() => showError(error2))), await __temp, __restore();
-    }
-    const resolvedInitialRoute = router.currentRoute.value;
-    syncCurrentRoute();
-    if (nuxtApp.ssrContext?.islandContext) {
-      return { provide: { router } };
-    }
-    const initialLayout = nuxtApp.payload.state._layout;
-    router.beforeEach(async (to, from) => {
-      await nuxtApp.callHook("page:loading:start");
-      to.meta = reactive(to.meta);
-      if (nuxtApp.isHydrating && initialLayout && !isReadonly(to.meta.layout)) {
-        to.meta.layout = initialLayout;
-      }
-      nuxtApp._processingMiddleware = true;
-      if (!nuxtApp.ssrContext?.islandContext) {
-        const middlewareEntries = /* @__PURE__ */ new Set([...globalMiddleware, ...nuxtApp._middleware.global]);
-        for (const component of to.matched) {
-          const componentMiddleware = component.meta.middleware;
-          if (!componentMiddleware) {
-            continue;
-          }
-          for (const entry2 of toArray(componentMiddleware)) {
-            middlewareEntries.add(entry2);
-          }
-        }
-        {
-          const routeRules = await nuxtApp.runWithContext(() => getRouteRules({ path: to.path }));
-          if (routeRules.appMiddleware) {
-            for (const key in routeRules.appMiddleware) {
-              if (routeRules.appMiddleware[key]) {
-                middlewareEntries.add(key);
-              } else {
-                middlewareEntries.delete(key);
-              }
-            }
-          }
-        }
-        for (const entry2 of middlewareEntries) {
-          const middleware = typeof entry2 === "string" ? nuxtApp._middleware.named[entry2] || await namedMiddleware[entry2]?.().then((r) => r.default || r) : entry2;
-          if (!middleware) {
-            throw new Error(`Unknown route middleware: '${entry2}'.`);
-          }
-          try {
-            if (false) ;
-            const result = await nuxtApp.runWithContext(() => middleware(to, from));
-            if (true) {
-              if (result === false || result instanceof Error) {
-                const error2 = result || createError({
-                  statusCode: 404,
-                  statusMessage: `Page Not Found: ${initialURL}`
-                });
-                await nuxtApp.runWithContext(() => showError(error2));
-                return false;
-              }
-            }
-            if (result === true) {
-              continue;
-            }
-            if (result === false) {
-              return result;
-            }
-            if (result) {
-              if (isNuxtError(result) && result.fatal) {
-                await nuxtApp.runWithContext(() => showError(result));
-              }
-              return result;
-            }
-          } catch (err) {
-            const error2 = createError(err);
-            if (error2.fatal) {
-              await nuxtApp.runWithContext(() => showError(error2));
-            }
-            return error2;
-          }
-        }
-      }
-    });
-    router.onError(async () => {
-      delete nuxtApp._processingMiddleware;
-      await nuxtApp.callHook("page:loading:end");
-    });
-    router.afterEach((to) => {
-      if (to.matched.length === 0) {
-        return nuxtApp.runWithContext(() => showError(createError({
-          statusCode: 404,
-          fatal: false,
-          statusMessage: `Page not found: ${to.fullPath}`,
-          data: {
-            path: to.fullPath
-          }
-        })));
-      }
-    });
-    nuxtApp.hooks.hookOnce("app:created", async () => {
-      try {
-        if ("name" in resolvedInitialRoute) {
-          resolvedInitialRoute.name = void 0;
-        }
-        await router.replace({
-          ...resolvedInitialRoute,
-          force: true
-        });
-        router.options.scrollBehavior = routerOptions.scrollBehavior;
-      } catch (error2) {
-        await nuxtApp.runWithContext(() => showError(error2));
-      }
-    });
-    return { provide: { router } };
   }
-});
+  return cookie;
+}
+function readRawCookies(opts = {}) {
+  {
+    return parse(getRequestHeader(useRequestEvent(), "cookie") || "", opts);
+  }
+}
+function writeServerCookie(event, name, value, opts = {}) {
+  if (event) {
+    if (value !== null && value !== void 0) {
+      return setCookie(event, name, value, opts);
+    }
+    if (getCookie(event, name) !== void 0) {
+      return deleteCookie(event, name, opts);
+    }
+  }
+}
 function definePayloadReducer(name, reduce) {
   {
     useNuxtApp().ssrContext._payloadReducers[name] = reduce;
   }
 }
-const reducers = [
-  ["NuxtError", (data) => isNuxtError(data) && data.toJSON()],
-  ["EmptyShallowRef", (data) => isRef(data) && isShallow(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
-  ["EmptyRef", (data) => isRef(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
-  ["ShallowRef", (data) => isRef(data) && isShallow(data) && data.value],
-  ["ShallowReactive", (data) => isReactive(data) && isShallow(data) && toRaw(data)],
-  ["Ref", (data) => isRef(data) && data.value],
-  ["Reactive", (data) => isReactive(data) && toRaw(data)]
-];
-const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__PURE__ */ defineNuxtPlugin({
-  name: "nuxt:revive-payload:server",
-  setup() {
-    for (const [reducer, fn] of reducers) {
-      definePayloadReducer(reducer, fn);
-    }
-  }
-});
 let activePinia;
 const setActivePinia = (pinia) => activePinia = pinia;
 const piniaSymbol = (
@@ -1092,47 +1233,536 @@ function defineStore(idOrOptions, setup, setupOptions) {
   useStore.$id = id;
   return useStore;
 }
-const __nuxt_component_1 = defineComponent({
-  name: "ServerPlaceholder",
-  render() {
-    return createElementBlock("div");
+let sessionBootstrapPromise = null;
+let profileFetchPromise = null;
+const parseRetryAfterHeader = (value) => {
+  if (typeof value !== "string" || !value.trim()) return null;
+  const asSeconds = Number(value);
+  if (Number.isFinite(asSeconds) && asSeconds > 0) {
+    return Math.ceil(asSeconds);
   }
-});
-const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
-defineComponent({
-  name: "ClientOnly",
-  inheritAttrs: false,
-  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
-  ...false,
-  setup(props, { slots, attrs }) {
-    const mounted = shallowRef(false);
-    const vm = getCurrentInstance();
-    if (vm) {
-      vm._nuxtClientOnly = true;
-    }
-    provide(clientOnlySymbol, true);
-    return () => {
-      if (mounted.value) {
-        const vnodes = slots.default?.();
-        if (vnodes && vnodes.length === 1) {
-          return [cloneVNode(vnodes[0], attrs)];
+  const asDate = Date.parse(value);
+  if (!Number.isNaN(asDate)) {
+    const seconds = Math.ceil((asDate - Date.now()) / 1e3);
+    if (seconds > 0) return seconds;
+  }
+  return null;
+};
+const parseDetailSeconds = (value) => {
+  if (typeof value !== "string") return null;
+  const match = value.match(/(\d+)\s*seconds?/i);
+  const parsed = Number(match?.[1] || 0);
+  if (Number.isFinite(parsed) && parsed > 0) return Math.ceil(parsed);
+  return null;
+};
+const withJitterMs = (baseMs) => {
+  const factor = 0.8 + Math.random() * 0.4;
+  return Math.max(1e3, Math.ceil(baseMs * factor));
+};
+const getProfileBackoffMsFromError = (error, fallbackMs = 1e4) => {
+  const retryAfter = error?.response?.headers?.get?.("retry-after") ?? error?.response?.headers?.["retry-after"] ?? error?.response?._data?.retry_after;
+  const headerSeconds = parseRetryAfterHeader(retryAfter);
+  if (headerSeconds) return withJitterMs(headerSeconds * 1e3);
+  const detailSeconds = parseDetailSeconds(error?.response?._data?.detail || error?.message);
+  if (detailSeconds) return withJitterMs(detailSeconds * 1e3);
+  return withJitterMs(fallbackMs);
+};
+const useAuthStore = /* @__PURE__ */ defineStore("auth", {
+  state: () => ({
+    token: null,
+    refreshToken: null,
+    user: null,
+    loading: false,
+    error: null,
+    initialized: false,
+    profileBackoffUntil: 0
+  }),
+  getters: {
+    isAuthenticated: (state) => Boolean(state.token),
+    hasStores: (state) => Boolean(state.user?.memberships?.length || state.user?.is_staff),
+    isProfileBackoffActive: (state) => Date.now() < Number(state.profileBackoffUntil || 0)
+  },
+  actions: {
+    restoreFromCookies() {
+      const secure = "production" === "production";
+      const tokenCookie = useCookie("auth_token", { secure, path: "/" });
+      const refreshCookie = useCookie("refresh_token", { secure, path: "/" });
+      this.token = tokenCookie.value || null;
+      this.refreshToken = refreshCookie.value || null;
+    },
+    async initializeSession(options) {
+      if (sessionBootstrapPromise) {
+        return sessionBootstrapPromise;
+      }
+      sessionBootstrapPromise = (async () => {
+        if (!this.token || !this.refreshToken) {
+          this.restoreFromCookies();
         }
-        return vnodes;
+        if (!this.token && this.refreshToken) {
+          await this.refreshTokens();
+        }
+        if (!this.token) {
+          this.user = null;
+          return null;
+        }
+        if (options?.forceProfile || !this.user) {
+          return await this.fetchProfile();
+        }
+        return this.user;
+      })();
+      try {
+        return await sessionBootstrapPromise;
+      } finally {
+        this.initialized = true;
+        sessionBootstrapPromise = null;
       }
-      const slot = slots.fallback || slots.placeholder;
-      if (slot) {
-        return h(slot);
+    },
+    async login(credentials) {
+      this.loading = true;
+      this.error = null;
+      const config = /* @__PURE__ */ useRuntimeConfig();
+      try {
+        const data = await $fetch(`${config.public.apiBase}/token/`, {
+          method: "POST",
+          body: credentials
+        });
+        this.token = data.access;
+        this.refreshToken = data.refresh;
+        const secure = "production" === "production";
+        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
+        useCookie("refresh_token", { maxAge: 60 * 60 * 24 * 7, sameSite: "lax", secure, path: "/" }).value = data.refresh;
+        await this.fetchProfile();
+      } catch (error) {
+        const detail = error?.response?._data?.detail || "No pudimos iniciar sesión";
+        this.error = detail;
+        throw new Error(detail);
+      } finally {
+        this.loading = false;
       }
-      const fallbackStr = props.fallback || props.placeholder || "";
-      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
-      return createElementBlock(fallbackTag, attrs, fallbackStr);
-    };
+    },
+    async register(payload) {
+      this.loading = true;
+      this.error = null;
+      const config = /* @__PURE__ */ useRuntimeConfig();
+      try {
+        const data = await $fetch(`${config.public.apiBase}/users/signup/`, {
+          method: "POST",
+          body: payload
+        });
+        this.token = data.access;
+        this.refreshToken = data.refresh;
+        this.user = data.user;
+        const secure = "production" === "production";
+        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
+        useCookie("refresh_token", { maxAge: 60 * 60 * 24 * 7, sameSite: "lax", secure, path: "/" }).value = data.refresh;
+      } catch (error) {
+        const detail = error?.response?._data?.detail || error?.response?._data || "No pudimos registrar tu cuenta";
+        this.error = detail;
+        throw new Error(detail);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async fetchProfile() {
+      if (!this.token) {
+        this.restoreFromCookies();
+      }
+      if (!this.token) return null;
+      if (profileFetchPromise) {
+        return profileFetchPromise;
+      }
+      if (Date.now() < Number(this.profileBackoffUntil || 0)) {
+        return this.user;
+      }
+      const config = /* @__PURE__ */ useRuntimeConfig();
+      profileFetchPromise = (async () => {
+        try {
+          const profile = await $fetch(`${config.public.apiBase}/users/me/`, {
+            headers: { Authorization: `Bearer ${this.token}` }
+          });
+          this.profileBackoffUntil = 0;
+          this.user = profile;
+          return profile;
+        } catch (error) {
+          if (error?.response?.status === 429) {
+            this.profileBackoffUntil = Date.now() + getProfileBackoffMsFromError(error);
+            this.error = "Demasiadas solicitudes al servidor. Reintentaremos en unos segundos.";
+            return this.user;
+          }
+          const code = error?.response?._data?.code;
+          if (code === "token_not_valid" && this.refreshToken) {
+            const refreshed = await this.refreshTokens();
+            if (refreshed) {
+              try {
+                const profile = await $fetch(`${config.public.apiBase}/users/me/`, {
+                  headers: { Authorization: `Bearer ${refreshed}` }
+                });
+                this.profileBackoffUntil = 0;
+                this.user = profile;
+                return profile;
+              } catch {
+              }
+            }
+          }
+          const detail = error?.response?._data?.detail || "No pudimos cargar tu perfil";
+          this.error = detail;
+          return null;
+        } finally {
+          profileFetchPromise = null;
+        }
+      })();
+      return profileFetchPromise;
+    },
+    async refreshTokens() {
+      if (!this.refreshToken) {
+        this.restoreFromCookies();
+      }
+      if (!this.refreshToken) return null;
+      const config = /* @__PURE__ */ useRuntimeConfig();
+      try {
+        const data = await $fetch(`${config.public.apiBase}/token/refresh/`, {
+          method: "POST",
+          body: { refresh: this.refreshToken }
+        });
+        this.token = data.access;
+        const secure = "production" === "production";
+        useCookie("auth_token", { maxAge: 60 * 60 * 24, sameSite: "lax", secure, path: "/" }).value = data.access;
+        return data.access;
+      } catch (error) {
+        this.logout();
+        return null;
+      }
+    },
+    async fetchMyStores() {
+      if (!this.token) {
+        this.restoreFromCookies();
+      }
+      if (!this.token) return [];
+      const config = /* @__PURE__ */ useRuntimeConfig();
+      try {
+        return await $fetch(`${config.public.apiBase}/stores/mine/`, {
+          headers: { Authorization: `Bearer ${this.token}` }
+        });
+      } catch (error) {
+        const code = error?.response?._data?.code;
+        if (code === "token_not_valid" && this.refreshToken) {
+          const refreshed = await this.refreshTokens();
+          if (refreshed) {
+            try {
+              return await $fetch(`${config.public.apiBase}/stores/mine/`, {
+                headers: { Authorization: `Bearer ${refreshed}` }
+              });
+            } catch (e) {
+              console.error("Reintento falló al cargar tus tiendas", e);
+            }
+          }
+        }
+        console.error("No pudimos cargar tus tiendas", error);
+        return [];
+      }
+    },
+    logout(options) {
+      const fallbackSlug = this.user?.memberships?.[0]?.store?.slug;
+      const redirect = options?.redirectTo ? options.redirectTo : fallbackSlug ? `/store/${fallbackSlug}/admin/login` : "/";
+      this.token = null;
+      this.refreshToken = null;
+      this.user = null;
+      this.initialized = true;
+      const secure = "production" === "production";
+      useCookie("auth_token", { secure, path: "/" }).value = null;
+      useCookie("refresh_token", { secure, path: "/" }).value = null;
+      navigateTo(redirect);
+    }
   }
 });
-function useRequestEvent(nuxtApp) {
-  nuxtApp ||= useNuxtApp();
-  return nuxtApp.ssrContext?.event;
-}
+const sectionByPath = (path) => {
+  if (path === "/dashboard" || path.startsWith("/dashboard/tickets")) return "overview";
+  if (path.startsWith("/dashboard/recursos-humanos")) return "hr";
+  if (path.startsWith("/dashboard/analisis-financiero")) return "finance";
+  if (path.startsWith("/dashboard/analisis")) return "analytics";
+  return "other";
+};
+const canAccessByRole = (section, roleSet, hasStores) => {
+  if (section === "other") return hasStores;
+  if (section === "overview") return hasStores;
+  if (section === "hr") return roleSet.has("ADMIN") || roleSet.has("HR");
+  if (section === "finance") return roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("FINANCE");
+  if (section === "analytics") return roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("DATA_ANALYST");
+  return false;
+};
+const resolveDefaultDashboardRoute = (roleSet, hasStores) => {
+  if (!hasStores) return "/";
+  if (roleSet.has("ADMIN") || roleSet.has("HR")) return "/dashboard/recursos-humanos";
+  if (roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("FINANCE")) return "/dashboard/analisis-financiero";
+  if (roleSet.has("ADMIN") || roleSet.has("REPORTS") || roleSet.has("DATA_ANALYST")) return "/dashboard/analisis";
+  return "/dashboard";
+};
+const dashboard_45access_45global = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
+  let __temp, __restore;
+  if (!to.path.startsWith("/dashboard")) return;
+  const auth = useAuthStore();
+  const profile = ([__temp, __restore] = executeAsync(() => auth.initializeSession({ forceProfile: true })), __temp = await __temp, __restore(), __temp);
+  if (!profile) {
+    return navigateTo("/login");
+  }
+  const memberships = Array.isArray(profile.memberships) ? profile.memberships : [];
+  const hasStores = memberships.length > 0 || Boolean(profile.is_staff);
+  const roles = /* @__PURE__ */ new Set();
+  memberships.forEach((membership) => {
+    const roleList = Array.isArray(membership.roles) ? membership.roles : [];
+    roleList.forEach((role) => roles.add(String(role || "").toUpperCase()));
+  });
+  if (profile.is_staff) {
+    roles.add("ADMIN");
+  }
+  const section = sectionByPath(to.path);
+  if (canAccessByRole(section, roles, hasStores)) {
+    return;
+  }
+  return navigateTo(resolveDefaultDashboardRoute(roles, hasStores));
+});
+const missing_45routes_45redirect_45global = /* @__PURE__ */ defineNuxtRouteMiddleware((to) => {
+  const missingPrefixes = [
+    "/login",
+    "/register",
+    "/dashboard",
+    "/marketplace",
+    "/tiendas",
+    "/profile",
+    "/notificaciones"
+  ];
+  const shouldRedirect = missingPrefixes.some((prefix) => to.path === prefix || to.path.startsWith(`${prefix}/`));
+  if (shouldRedirect) {
+    return navigateTo("/", { replace: true });
+  }
+});
+const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
+  {
+    return;
+  }
+});
+const globalMiddleware = [
+  validate,
+  dashboard_45access_45global,
+  missing_45routes_45redirect_45global,
+  manifest_45route_45rule
+];
+const namedMiddleware = {
+  auth: () => import('./auth-kmFyUq2Q.mjs'),
+  tenant: () => import('./tenant-DWgS4oEk.mjs')
+};
+const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
+  name: "nuxt:router",
+  enforce: "pre",
+  async setup(nuxtApp) {
+    let __temp, __restore;
+    let routerBase = (/* @__PURE__ */ useRuntimeConfig()).app.baseURL;
+    const history = routerOptions.history?.(routerBase) ?? createMemoryHistory(routerBase);
+    const routes2 = routerOptions.routes ? ([__temp, __restore] = executeAsync(() => routerOptions.routes(_routes)), __temp = await __temp, __restore(), __temp) ?? _routes : _routes;
+    let startPosition;
+    const router = createRouter({
+      ...routerOptions,
+      scrollBehavior: (to, from, savedPosition) => {
+        if (from === START_LOCATION) {
+          startPosition = savedPosition;
+          return;
+        }
+        if (routerOptions.scrollBehavior) {
+          router.options.scrollBehavior = routerOptions.scrollBehavior;
+          if ("scrollRestoration" in (void 0).history) {
+            const unsub = router.beforeEach(() => {
+              unsub();
+              (void 0).history.scrollRestoration = "manual";
+            });
+          }
+          return routerOptions.scrollBehavior(to, START_LOCATION, startPosition || savedPosition);
+        }
+      },
+      history,
+      routes: routes2
+    });
+    nuxtApp.vueApp.use(router);
+    const previousRoute = shallowRef(router.currentRoute.value);
+    router.afterEach((_to, from) => {
+      previousRoute.value = from;
+    });
+    Object.defineProperty(nuxtApp.vueApp.config.globalProperties, "previousRoute", {
+      get: () => previousRoute.value
+    });
+    const initialURL = nuxtApp.ssrContext.url;
+    const _route = shallowRef(router.currentRoute.value);
+    const syncCurrentRoute = () => {
+      _route.value = router.currentRoute.value;
+    };
+    router.afterEach((to, from) => {
+      if (to.matched.at(-1)?.components?.default === from.matched.at(-1)?.components?.default) {
+        syncCurrentRoute();
+      }
+    });
+    const route = { sync: syncCurrentRoute };
+    for (const key in _route.value) {
+      Object.defineProperty(route, key, {
+        get: () => _route.value[key],
+        enumerable: true
+      });
+    }
+    nuxtApp._route = shallowReactive(route);
+    nuxtApp._middleware ||= {
+      global: [],
+      named: {}
+    };
+    if (!nuxtApp.ssrContext?.islandContext) {
+      router.afterEach(async (to, _from, failure) => {
+        delete nuxtApp._processingMiddleware;
+        if (failure) {
+          await nuxtApp.callHook("page:loading:end");
+        }
+        if (failure?.type === 4) {
+          return;
+        }
+        if (to.redirectedFrom && to.fullPath !== initialURL) {
+          await nuxtApp.runWithContext(() => navigateTo(to.fullPath || "/"));
+        }
+      });
+    }
+    try {
+      if (true) {
+        ;
+        [__temp, __restore] = executeAsync(() => router.push(initialURL)), await __temp, __restore();
+        ;
+      }
+      ;
+      [__temp, __restore] = executeAsync(() => router.isReady()), await __temp, __restore();
+      ;
+    } catch (error2) {
+      [__temp, __restore] = executeAsync(() => nuxtApp.runWithContext(() => showError(error2))), await __temp, __restore();
+    }
+    const resolvedInitialRoute = router.currentRoute.value;
+    syncCurrentRoute();
+    if (nuxtApp.ssrContext?.islandContext) {
+      return { provide: { router } };
+    }
+    const initialLayout = nuxtApp.payload.state._layout;
+    router.beforeEach(async (to, from) => {
+      await nuxtApp.callHook("page:loading:start");
+      to.meta = reactive(to.meta);
+      if (nuxtApp.isHydrating && initialLayout && !isReadonly(to.meta.layout)) {
+        to.meta.layout = initialLayout;
+      }
+      nuxtApp._processingMiddleware = true;
+      if (!nuxtApp.ssrContext?.islandContext) {
+        const middlewareEntries = /* @__PURE__ */ new Set([...globalMiddleware, ...nuxtApp._middleware.global]);
+        for (const component of to.matched) {
+          const componentMiddleware = component.meta.middleware;
+          if (!componentMiddleware) {
+            continue;
+          }
+          for (const entry2 of toArray(componentMiddleware)) {
+            middlewareEntries.add(entry2);
+          }
+        }
+        {
+          const routeRules = await nuxtApp.runWithContext(() => getRouteRules({ path: to.path }));
+          if (routeRules.appMiddleware) {
+            for (const key in routeRules.appMiddleware) {
+              if (routeRules.appMiddleware[key]) {
+                middlewareEntries.add(key);
+              } else {
+                middlewareEntries.delete(key);
+              }
+            }
+          }
+        }
+        for (const entry2 of middlewareEntries) {
+          const middleware = typeof entry2 === "string" ? nuxtApp._middleware.named[entry2] || await namedMiddleware[entry2]?.().then((r) => r.default || r) : entry2;
+          if (!middleware) {
+            throw new Error(`Unknown route middleware: '${entry2}'.`);
+          }
+          try {
+            if (false) ;
+            const result = await nuxtApp.runWithContext(() => middleware(to, from));
+            if (true) {
+              if (result === false || result instanceof Error) {
+                const error2 = result || createError({
+                  statusCode: 404,
+                  statusMessage: `Page Not Found: ${initialURL}`
+                });
+                await nuxtApp.runWithContext(() => showError(error2));
+                return false;
+              }
+            }
+            if (result === true) {
+              continue;
+            }
+            if (result === false) {
+              return result;
+            }
+            if (result) {
+              if (isNuxtError(result) && result.fatal) {
+                await nuxtApp.runWithContext(() => showError(result));
+              }
+              return result;
+            }
+          } catch (err) {
+            const error2 = createError(err);
+            if (error2.fatal) {
+              await nuxtApp.runWithContext(() => showError(error2));
+            }
+            return error2;
+          }
+        }
+      }
+    });
+    router.onError(async () => {
+      delete nuxtApp._processingMiddleware;
+      await nuxtApp.callHook("page:loading:end");
+    });
+    router.afterEach((to) => {
+      if (to.matched.length === 0) {
+        return nuxtApp.runWithContext(() => showError(createError({
+          statusCode: 404,
+          fatal: false,
+          statusMessage: `Page not found: ${to.fullPath}`,
+          data: {
+            path: to.fullPath
+          }
+        })));
+      }
+    });
+    nuxtApp.hooks.hookOnce("app:created", async () => {
+      try {
+        if ("name" in resolvedInitialRoute) {
+          resolvedInitialRoute.name = void 0;
+        }
+        await router.replace({
+          ...resolvedInitialRoute,
+          force: true
+        });
+        router.options.scrollBehavior = routerOptions.scrollBehavior;
+      } catch (error2) {
+        await nuxtApp.runWithContext(() => showError(error2));
+      }
+    });
+    return { provide: { router } };
+  }
+});
+const reducers = [
+  ["NuxtError", (data) => isNuxtError(data) && data.toJSON()],
+  ["EmptyShallowRef", (data) => isRef(data) && isShallow(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
+  ["EmptyRef", (data) => isRef(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
+  ["ShallowRef", (data) => isRef(data) && isShallow(data) && data.value],
+  ["ShallowReactive", (data) => isReactive(data) && isShallow(data) && toRaw(data)],
+  ["Ref", (data) => isRef(data) && data.value],
+  ["Reactive", (data) => isReactive(data) && toRaw(data)]
+];
+const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__PURE__ */ defineNuxtPlugin({
+  name: "nuxt:revive-payload:server",
+  setup() {
+    for (const [reducer, fn] of reducers) {
+      definePayloadReducer(reducer, fn);
+    }
+  }
+});
 const plugin = /* @__PURE__ */ defineNuxtPlugin({
   name: "pinia",
   setup(nuxtApp) {
@@ -1166,7 +1796,9 @@ const plugins = [
   prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-DwSpjs7n.mjs').then((m) => m.default || m))
+  admin: defineAsyncComponent(() => import('./admin-B38MFbEf.mjs').then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import('./default-CKJgQOeh.mjs').then((m) => m.default || m)),
+  store: defineAsyncComponent(() => import('./store-sewIgsm9.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -1189,7 +1821,7 @@ const nuxtLayoutProps = {
     default: null
   }
 };
-const __nuxt_component_0 = defineComponent({
+const __nuxt_component_0$1 = defineComponent({
   name: "NuxtLayout",
   inheritAttrs: false,
   props: nuxtLayoutProps,
@@ -1327,7 +1959,7 @@ const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   }
 });
 const RouteProvider = defineRouteProvider();
-const __nuxt_component_2 = defineComponent({
+const __nuxt_component_0 = defineComponent({
   name: "NuxtPage",
   inheritAttrs: false,
   props: {
@@ -1387,9 +2019,9 @@ const _export_sfc = (sfc, props) => {
 };
 const _sfc_main$2 = {};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLayout = __nuxt_component_0;
-  const _component_NuxtRouteAnnouncer = __nuxt_component_1;
-  const _component_NuxtPage = __nuxt_component_2;
+  const _component_NuxtLayout = __nuxt_component_0$1;
+  const _component_NuxtRouteAnnouncer = __nuxt_component_1$1;
+  const _component_NuxtPage = __nuxt_component_0;
   _push(ssrRenderComponent(_component_NuxtLayout, _attrs, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -1426,8 +2058,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-CEspcn4U.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-Gq5r8UNK.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-D79DNC0E.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-DeMVaJyv.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));
@@ -1508,5 +2140,5 @@ let entry;
 }
 const entry_default = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, useRuntimeConfig as a, useRequestEvent as b, useRoute as c, defineStore as d, entry_default as default, useRouter as e, nuxtLinkDefaults as f, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
+export { _export_sfc as _, useRuntimeConfig as a, useAuthStore as b, __nuxt_component_1 as c, __nuxt_component_0 as d, entry_default as default, useRouter as e, nuxtLinkDefaults as f, defineStore as g, useRoute as h, defineNuxtRouteMiddleware as i, navigateTo as n, resolveRouteObject as r, useNuxtApp as u };
 //# sourceMappingURL=server.mjs.map
